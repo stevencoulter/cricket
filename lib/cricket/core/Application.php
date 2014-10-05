@@ -42,6 +42,9 @@ class Application {
     
     static private $sInstance = null;
     static private $sSessionStarted = false;
+    static private $sSessionCount = 0;
+    private $sMutable = true;
+    
     
     /** @return Application */
     static public function getInstance() {
@@ -101,6 +104,14 @@ class Application {
         // lazy start
         //$this->startSession();
     }
+    
+    public function setMutable($inMutable) {
+     	$this->sMutable = $inMutable;
+    }
+    
+   	public function isMutable() {
+   		return $this->sMutable;
+   	}
     
     public function getDefaultModuleClass() {
         return "cricket\\core\\DefaultModule";
@@ -203,9 +214,23 @@ class Application {
     }
     
     public function ensureSession() {
-        if(!self::$sSessionStarted) {
-            $this->startSession();
-        }
+    	if (!$this->isMutable()) {
+    		if (self::$sSessionCount == 0 && !self::$sSessionStarted)
+    			$this->startSession();
+    		self::$sSessionCount += 1;
+    	} else {
+	        if(!self::$sSessionStarted) {
+	            $this->startSession();
+	        }
+    	}
+    }
+    
+    public function attemptSessionClose() {
+    	if (!$this->isMutable()) {
+    		self::$sSessionCount -= 1;
+    		if (self::$sSessionCount == 0)
+    			$this->closeSession();
+    	}
     }
     
     public function startSession() {
@@ -251,11 +276,19 @@ class Application {
     }
     
     public function destroySessionNow() {
-        if(self::$sSessionStarted) {
-            $_SESSION = array();
-            session_destroy();
-            self::$sSessionStarted = false;            
-        }
+    	if (!$this->isMutable()) {
+    		if(self::$sSessionCount > 0) {
+    			$_SESSION = array();
+    			session_destroy();
+    			self::$sSessionCount = 0;
+    		}
+    	} else {
+	        if(self::$sSessionStarted) {
+	            $_SESSION = array();
+	            session_destroy();
+	            self::$sSessionStarted = false;            
+	        }
+    	}
     }
     
     
@@ -303,17 +336,20 @@ class Application {
         return implode("/",$parts);
     }
     
-    
+    public function getUniqueId() {
+    	$this->ensureSession();
+    	$unique_id = session_id();
+    	$this->attemptSessionClose();
+    	return $unique_id;
+    }
   
     /** @return Page */
     public function loadPageFromStorage($inInstanceID,$inPageVersion) {
-        $this->ensureSession();
-        return $this->getPageStoreHandler()->load(session_id(),$inInstanceID,$inPageVersion);
+        return $this->getPageStoreHandler()->load($this->getUniqueId(),$inInstanceID,$inPageVersion);
     }
     
     public function savePageToStorage(Page $inPage,$inSaveAsInstanceID = null) {
-        $this->ensureSession();
-        $this->getPageStoreHandler()->save(session_id(),$inPage,$inSaveAsInstanceID);
+        $this->getPageStoreHandler()->save($this->getUniqueId(),$inPage,$inSaveAsInstanceID);
     }
     
     /** @return PageStoreHandler */

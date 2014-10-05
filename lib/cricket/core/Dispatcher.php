@@ -171,12 +171,15 @@ class Dispatcher {
 
             // GRAB THE PAGE ID AND THEN MAKE NOTE IF THERE IS ANY "SUB ITEMS" ($pageTop)
             
-            list($pageID,$instanceID,$parts) = $module->parseURIPartsToClass($parts);
-            
-            $pageTop = count($parts) == 0;
+            list($pageID,$instanceID,$parts,$mutableCall) = $module->parseURIPartsToClass($parts);
 
+            $pageTop = count($parts) == 0;
             $qName = $module->resolvePageID($pageID);
 
+            $mutable = ($qName::$SESSION_MODE == Page::MODE_STATELESS) ? false : $mutableCall;
+            
+            Application::getInstance()->setMutable($mutable);
+            
             if($qName === null) {
                 $this->resp->sendError(self::ERROR_404);
             }else{
@@ -185,7 +188,7 @@ class Dispatcher {
                 // GRAB INSTANCE ID IF WE HAVE ONE AND MAKE NOTE IF THE INSTANCE ID IS REQUIRED
                 // IF INSTANCE ID IS REQUIRED AND WE DON'T HAVE ONE, THEN THROW AN ERROR SINCE THIS IS A PROGRAMMING ERROR
                 // AND NOT A RUNTIME USER ERROR
-                
+            	
                 $isPost = $this->req->getMethod() == 'POST';
                 $isCricketAjax = $this->req->getHeader("x-cricket-ajax") !== null;
                 $postedInstanceID = isset($_REQUEST[self::INSTANCE_ID]) ? $_REQUEST[self::INSTANCE_ID] : null;
@@ -246,9 +249,10 @@ class Dispatcher {
                 }else{
                     // TODO:  This shouldn't be here, but I need to make sure that there is a session before output starts so that I can get 
                     // the session key.    I need to remove the dependancy on the session key
-                    if($qName::$SESSION_MODE != Page::MODE_STATELESS) {
-                        $app->ensureSession();
-                    }
+                    
+                	#if($qName::$SESSION_MODE != Page::MODE_STATELESS) {
+                    #    $app->ensureSession();
+                    #}
                 }
 
                 if($process) {
@@ -307,7 +311,7 @@ class Dispatcher {
                     //  IF THE PAGE HAS STATE AND WAS LOADED, THEN
                     //  SAVE IT BACK TO THE STORAGE (AGAIN USING THE $saveID IF SET, OR IT DEFAULTS TO THE PAGE INSTANCE ID
                     
-                    if($thisPage->hasState() && $thisPage->_loaded) {
+                    if($thisPage->hasState() && $thisPage->_loaded && $mutable) {
                         $app->savePageToStorage($thisPage, $saveID);
                     }
                 }

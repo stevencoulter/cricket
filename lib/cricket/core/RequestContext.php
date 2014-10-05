@@ -90,17 +90,15 @@ class RequestContext {
     
     public function getSessionAttribute($inKey) {
         Application::getInstance()->ensureSession();
-        
-        if(isset($_SESSION[$inKey])) {
-            return $_SESSION[$inKey];
-        }
-        return null;
+        $result = (isset($_SESSION[$inKey])) ? $_SESSION[$inKey] : null;
+        Application::getInstance()->attemptSessionClose();
+        return $result;
     }
     
     public function setSessionAttribute($inKey,$value) {
         Application::getInstance()->ensureSession();
-
         $_SESSION[$inKey] = $value;
+        Application::getInstance()->attemptSessionClose();
     }
     
     public function clearSessionAttribute($inKey) {

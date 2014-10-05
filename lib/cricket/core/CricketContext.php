@@ -114,14 +114,14 @@ class CricketContext {
     }
     
     
-    public function call_action($inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
+    public function call_action($inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null, $inMutable = true) {
         if($inData !== null) {
             if(is_array($inData)) {
                 $inData = json_encode($inData);
             }
         }
         
-        $url = $this->component->getActionUrl($inActionID);
+        $url = $this->component->getActionUrl($inActionID, $inMutable);
         $data = $inData === null ? "{}" : $inData;
         $iID = $indicatorID === null ? "null" : "'$indicatorID'";
         if($confirmation) {
@@ -286,7 +286,11 @@ class CricketContext {
     public function call($inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
         return $this->call_action($inActionID, $inData, $indicatorID, $confirmation, $requestChannel);
     }
-        
+
+    public function call_async($inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
+    	return $this->call_action($inActionID, $inData, $indicatorID, $confirmation, $requestChannel, false);
+    }
+    
     public function call_attr($inActionID,$inDataString = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
         return $this->escapeAttr($this->call($inActionID,$inDataString,$indicatorID,$confirmation,$requestChannel));
     }

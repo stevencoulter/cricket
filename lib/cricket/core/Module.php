@@ -157,21 +157,24 @@ class Module {
     public function parseURIPartsToClass($parts) {
         $results = array();
         $instanceID = null;
+        $mutable = true;
         
         while(count($parts)) {
             $thisPart = array_shift($parts);
-            if(substr($thisPart, 0, 1) == '@') {
-                $instanceID = substr($thisPart,1);
+            if(substr($thisPart, 0, 1) == '@' || substr($thisPart, 0, 1) == '!') {
+				if (substr($thisPart, 0, 1) == '!')
+					$mutable = false;
+            	$instanceID = substr($thisPart,1);
                 break;
             }
             $results[] = $thisPart;
         }
         
-        return array(implode("/",$results),$instanceID,$parts);
+        return array(implode("/",$results),$instanceID,$parts, $mutable);
     }
 
     
-    public function assembleURL(RequestContext $inRequest,$inPageClassName,$inPagePathInfo,$inInstanceID = null) {
+    public function assembleURL(RequestContext $inRequest,$inPageClassName,$inPagePathInfo,$inInstanceID = null,$inMutable = true) {
         $pageID = $this->getPageIDFromPageClassName($inPageClassName);
         
         if(empty($pageID)) {
@@ -180,7 +183,7 @@ class Module {
         
         $result = $this->dispatchURL . "/{$pageID}";
         if(!empty($inPagePathInfo)) {
-            $sep = "/@";
+            $sep = ($inMutable) ? "/@" : "/!";
             if($inInstanceID) {
                 $sep .= $inInstanceID;
             }
