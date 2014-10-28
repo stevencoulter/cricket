@@ -21,6 +21,10 @@
 
 namespace cricket\core;
 
+/**
+ * Dispatches a request
+ *
+ */
 class Dispatcher {
     const INSTANCE_ID = "_CRICKET_PAGE_INSTANCE_";
     const ERROR_404 = "404 Not Found";
@@ -33,22 +37,45 @@ class Dispatcher {
     private $moduleClass;
     
     static public $sInstance = null;
+    
+    /**
+     * Return this instance
+     * 
+     * @return \cricket\core\Dispatcher
+     */
     static public function getInstance() {
         return self::$sInstance;
     }
     
-    /** @return RequestContext */
+    /**
+     * Get the request
+     * @return RequestContext 
+     */
     public function getRequest() {
         return $this->req;
     }
     
-    /** @return ResponseContext */
+    /**
+     * Get the response
+     * 
+     * @return ResponseContext 
+     */
     public function getResponse() {
         return $this->resp;
     }
     
-    // these must match alias in apache config
-    // $externalResourcePaths = array( 'alias' => 'full-system-path', ...);
+    /**
+     * Constrict the dispatcher
+     * 
+     * @param string $inUsePHPExtension
+     * @param string $inContextRootUrl
+     * @param string $inContextRootPath
+     * @param array $externalResourcePaths
+     * @param string $inModuleClass
+     * @param string $inDefaultPageClass
+     * 
+     * @return void
+     */
     public function __construct($inUsePHPExtension = null,$inContextRootUrl = null,$inContextRootPath = null,$externalResourcePaths = array(),$inModuleClass=null,$inDefaultPageClass = null) {        
         self::$sInstance = $this;
         
@@ -93,18 +120,33 @@ class Dispatcher {
         $app->initializeModules($inContextRootUrl,$inModuleClass,$inUsePHPExtension);
     }
     
+    /**
+     * Determine context URI from $_SERVER['SCRIPT_NAME']
+     * 
+     * @return string
+     */
     protected function determineContextUri() {
         $path = $_SERVER['SCRIPT_NAME'];
         $pathInfo = pathinfo($path);
         return $pathInfo['dirname'];
     }
     
+    /**
+     * Determine context root from $_SERVER['SCRIPT_FILENAME']
+     * 
+     * @return string
+     */
     protected function determineContextRootPath() {
         $script = $_SERVER['SCRIPT_FILENAME'];
         $pathInfo = pathinfo($script);
         return $pathInfo['dirname'];
     }
     
+    /**
+     * Determine the context root URL
+     * 
+     * @return string
+     */
     protected function determineContextRootUrl() {
         $path = $_SERVER['SCRIPT_NAME'];
         $pathInfo = pathinfo($path);
@@ -120,6 +162,13 @@ class Dispatcher {
         return "{$scheme}://{$host}{$port}{$pathInfo['dirname']}";
     }
     
+    /**
+     * Set the response expired
+     * 
+     * @param bool $inAjax
+     * 
+     * @return void
+     */
     protected function response_expired($inAjax) {
         $message = "Your current session with this application has expired.  Please refresh your browser window to continue.";
         if($inAjax) {
@@ -131,6 +180,13 @@ class Dispatcher {
         }
     }
     
+    /**
+     * Set redirect to a page class
+     * 
+     * @param string $inPageClass
+     * 
+     * @return void
+     */
     public function redirectToPage($inPageClass) {
         $app = Application::getInstance();
         $module = $app->getModule($this->moduleClass);
@@ -139,6 +195,14 @@ class Dispatcher {
         $this->resp->sendRedirect($url);
     }
     
+    /**
+     * Enter the Application, dispatch the request, and exit the Application
+     * 
+     * @throws \Exception
+     * @throws Exception
+     * 
+     * @return void
+     */
     public function dispatchRequest() {
         
         // GET PATH INFO AND EXPLODE INTO PARTS, THEN REMOVE FIRST EMPTY PART
@@ -175,10 +239,6 @@ class Dispatcher {
 
             $pageTop = count($parts) == 0;
             $qName = $module->resolvePageID($pageID);
-
-            $mutable = ($qName::$SESSION_MODE == Page::MODE_STATELESS) ? false : $mutableCall;
-            
-            Application::getInstance()->setMutable($mutable);
             
             if($qName === null) {
                 $this->resp->sendError(self::ERROR_404);
@@ -189,6 +249,9 @@ class Dispatcher {
                 // IF INSTANCE ID IS REQUIRED AND WE DON'T HAVE ONE, THEN THROW AN ERROR SINCE THIS IS A PROGRAMMING ERROR
                 // AND NOT A RUNTIME USER ERROR
             	
+            	$mutable = ($qName::$SESSION_MODE == Page::MODE_STATELESS) ? false : $mutableCall;
+            	Application::getInstance()->setMutable($mutable);
+            	 
                 $isPost = $this->req->getMethod() == 'POST';
                 $isCricketAjax = $this->req->getHeader("x-cricket-ajax") !== null;
                 $postedInstanceID = isset($_REQUEST[self::INSTANCE_ID]) ? $_REQUEST[self::INSTANCE_ID] : null;

@@ -21,19 +21,46 @@
 
 namespace cricket\core;
 
+use cricket\utils\Translator;
+
+/**
+ * Module 
+ *
+ */
 
 class Module {
     
+	/** @var string */
     private $dispatchURL;
     
+    /**
+     * Construct the module
+     * 
+     * @param string $inDispatchURL
+     * 
+     * @return void
+     */
     public function __construct($inDispatchURL) {
         $this->dispatchURL = $inDispatchURL;
     }
-    
+
+    /**
+     * Get the dispatch URL
+     * 
+     * @return string
+     */
     public function getDispatchURL() {
         return $this->dispatchURL;
     }
     
+    /**
+     * Resolve a resource's path
+     * 
+     * @param string $inResource
+     * @param string $inApplicationContextPath
+     * 
+     * @return string
+     */
     public function resolveResourcePath($inResource,$inApplicationContextPath) {
         
         if(strpos($inResource, '/') === 0) {
@@ -52,6 +79,11 @@ class Module {
         return null;
     }
     
+    /**
+     * Match an ID in the dispatch URL
+     * 
+     * @return string
+     */
     public function getID() {
         if(preg_match('/.+\/(.+)$/',$this->dispatchURL,$matches)) {
             return $matches[1];
@@ -60,6 +92,11 @@ class Module {
         return "";
     }
         
+    /**
+     * Get Page search paths
+     * 
+     * @return string
+     */
     public function getPageSearchPaths() {
         $result = array();
         
@@ -73,87 +110,44 @@ class Module {
         return $result;
     }
     
-    
+    /**
+     * Get Page class prefix
+     * 
+     * @return string
+     */
     public function getPageClassPrefix() {
         return "Page";
     }
 
-    // pageID is leaf URL pattern.   returns leaf page class name
-    // [TEMP NOTE] at the moment, this is only called from resolvePageID below
-    public function getPageClassNameFromPageID($inPageID) {
-        $parts = explode("/",$inPageID);
-        $last = $parts[count($parts) - 1];
-        $className = $this->getPageClassPrefix() . ucfirst($last);
-        $parts[count($parts) - 1] = $className;
-        return implode("\\",$parts);
-    }
-    
-    
-    // pages leaf page class and attempts to resolve it to
-    // a fully qualified class name by searching within this modules classes
-    // if its already a fully qualified class name then return the class name 
-    // if it exists in this module.
-    
-    // [TEMP NOTE]  Called from resolvePageID below, which will only ever be a leaf class
-    // [TEMP NOTE]  Also called from application pageClass2ModuleAndClass which might be a Leaf Class, or fully qualified class
+    /**
+     * Resolve page class to fully qualified class name
+     * 
+     * @param string $inPageClass
+     * 
+     * @return string
+     */
     public function resolvePageClass($inPageClass) {
-        $searchPaths = $this->getPageSearchPaths();
-        
-        foreach($searchPaths as $thisPath) {
-            if(strpos($inPageClass, $thisPath) === 0) {
-                return $inPageClass;
-            }
-        }
-
-        foreach($searchPaths as $thisTestNS) {
-            $thisTestClass = "$thisTestNS\\$inPageClass";
-            $thisTestPath = str_replace("\\","/",$thisTestClass) . ".php";
-            if(stream_resolve_include_path($thisTestPath) !== false) {
-                return $thisTestClass;
-            }
-        }
-        
-        
-        return null;
+    	return Translator::resolvePageClass($inPageClass, $this->getPageSearchPaths());
     }
     
-    
-    // resolves a URL leaf pattern directly to a fully qualified class name
-    // [TEMP NOTE]  Only called from dispatcher
+	/**
+	 * Resolve page ID into class name
+	 * 
+	 * @param string $inPageID
+	 * 
+	 * @return string
+	 */
     public function resolvePageID($inPageID) {
-        return $this->resolvePageClass($this->getPageClassNameFromPageID($inPageID));
+    	return Translator::resolvePageID($inPageID, $this->getPageClassPrefix(), $this->getPageSearchPaths());
     }
     
-    
-    // given a fully qualified or leaf class name, return the URL leaf pattern
-    // that will map back to the same class
-    // [TEMP NOTE]  Only called from application which is only called from Page for creating URL
-    public function getPageIDFromPageClassName($inPageClassName) {
-        $fullClass = $this->resolvePageClass($inPageClassName);
-        
-        $longest = "";
-        $searchPaths = $this->getPageSearchPaths();
-        foreach($searchPaths as $thisPath) {
-            if(strpos($fullClass, $thisPath) === 0) {
-                if(strlen($thisPath) > $longest) {
-                    $longest = $thisPath;
-                }
-            }
-        }
-        
-        $fragment = substr($fullClass,strlen($longest) + 1);
-        $parts = explode("\\",$fragment);
-        $last = $parts[count($parts) - 1];
-
-        $prefix = $this->getPageClassPrefix();
-        $regex = "/^{$prefix}/";
-        $last = preg_replace($regex,'',$last);
-        $parts[count($parts) - 1] = strtolower($last);
-        
-        return implode("/",$parts);
-    }
-        
-    
+    /**
+     * Determine the proper class from URI.  Determine if mutable or not by use of @ or !
+     * 
+     * @param array $parts
+     * 
+     * @return multitype: string string array boolean Path, Instance ID, Parts, Mutable
+     */
     public function parseURIPartsToClass($parts) {
         $results = array();
         $instanceID = null;
@@ -173,10 +167,22 @@ class Module {
         return array(implode("/",$results),$instanceID,$parts, $mutable);
     }
 
-    
+    /**
+     * Assemble a URL
+     * 
+     * @param RequestContext $inRequest
+     * @param string $inPageClassName
+     * @param string $inPagePathInfo
+     * @param string $inInstanceID
+     * @param string $inMutable
+     * 
+     * @throws \Exception
+     * 
+     * @return string the assembled URL
+     */
     public function assembleURL(RequestContext $inRequest,$inPageClassName,$inPagePathInfo,$inInstanceID = null,$inMutable = true) {
-        $pageID = $this->getPageIDFromPageClassName($inPageClassName);
-        
+    	$fullClass = $this->resolvePageClass($inPageClassName);
+    	$pageID = Translator::getPageIDFromPageClassName($fullClass, $this->getPageClassPrefix(), $this->getPageSearchPaths());
         if(empty($pageID)) {
             throw new \Exception("Unable to create URL for page class: $inPageClassName [MODULE ID: {$this->getID()}]");
         }

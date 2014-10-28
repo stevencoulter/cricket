@@ -21,6 +21,10 @@
 
 namespace cricket\components;
 
+/**
+ * A component shown in a dialog window
+ *
+ */
 
 abstract class ModalComponent extends DialogComponent {
     

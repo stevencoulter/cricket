@@ -32,6 +32,13 @@
 // I'm happy to consider using PSR-4 if someone can explain the win to me.
 // Having said all that, I believe that this autoloader should play nicely with others.
 
+/**
+ * Autoload class by mapping the namespace to a file system path
+ *
+ * @param string $className The class name to load
+ *
+ * @return boolean Returns true if the class exists.  The path is added to the php include path
+ */
 function __cricket_autoload($className) {
     $path = str_replace("\\", "/", $className) . ".php";
     if(stream_resolve_include_path($path) !== false) {

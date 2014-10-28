@@ -36,14 +36,35 @@ class MessageCenter {
     public static $sending = false;
     public static $toRemove = array();
 
+    /**
+     * Register a page to the MessageCenter
+     * 
+     * @param Page $inPage
+     * 
+     * @return void
+     */
     public static function registerPage(Page $inPage) {
         self::$page = $inPage;
     }
     
+    /**
+     * Register a receiver to the page
+     * 
+     * @link Page::mcRegisterReceiver()
+     * 
+     * @param MessageReceiver $inReceiver
+     */
     public static function registerReceiver(MessageReceiver $inReceiver) {
         self::$page->mcRegisterReceiver($inReceiver);
     }
     
+    /**
+     * Remove a receiver from the page
+     * 
+     * @link Page::mcRemoveReceiver()
+     * 
+     * @param MessageReceiver $inReceiver
+     */
     public static function removeReceiver(MessageReceiver $inReceiver) {
         if(self::$sending) {
             self::$toRemove[] = $inReceiver;
@@ -52,17 +73,34 @@ class MessageCenter {
         }
     }
     
-    /** @return Page */
+    /**
+     * 
+     * @return Page
+     */
     public static function getActivePage() {
         return self::$page;
     }
     
+    /**
+     * 
+     * @param boolean $inEnabled
+     * 
+     * @return boolean
+     */
     public static function setEnabled($inEnabled) {
         $old = self::$active;
         self::$active = $inEnabled;
         return $old;
     }
     
+    /**
+     * Enable a particular message
+     * 
+     * @param string $inMessage
+     * @param boolean $inEnabled
+     * 
+     * @return boolean
+     */
     public static function setMessageEnabled($inMessage,$inEnabled) {
         $old = !isset(self::$blocked[$inMessage]);
         if($inEnabled) {
@@ -73,7 +111,13 @@ class MessageCenter {
         return $old;
     }
     
-    
+    /**
+     * Allow to send message
+     * 
+     * @param string $inMessage
+     * 
+     * @return boolean
+     */
     public static function canSendMessage($inMessage) {
         $send = false;
         if(self::$active) {
@@ -86,7 +130,17 @@ class MessageCenter {
     }
     
     
-    
+    /**
+     * Broadcast a message, it's data, and who sent it.
+     * 
+     * @see Container::receiveMessage
+     * 
+     * @param string $inMessage
+     * @param mixed $inData
+     * @param Container $sender
+     * 
+     * @return void
+     */
     public static function broadcastMessage($inMessage,$inData,$sender = null) {
         if(self::canSendMessage($inMessage)) {
             self::$sending++;

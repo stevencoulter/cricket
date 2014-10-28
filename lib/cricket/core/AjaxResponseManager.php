@@ -21,6 +21,9 @@
 
 namespace cricket\core;
 
+/**
+ * A class to manage the AjaxResponse
+ */
 
 class AjaxResponseManager {
     /** @var AjaxResponse*/
@@ -37,17 +40,30 @@ class AjaxResponseManager {
         return $this->response;
     }
     
+    /**
+     * Add the component for invalidation
+     *
+     * @param Component $c
+     *
+     * @return void
+     */
     public function invalidate(Component $c) {
         $this->components[$c->getId()] = $c;
     }
     
     
-    // todo: deal with removing, etc.
-    
+    /**
+     * For each component, call setUpdate in the AjaxResponse with the component's render method
+     * 
+     * @link AjaxResponse::setUpdate()
+     * @link Component::render()
+     *
+     * @todo deal with removing, etc
+     *
+     * @return void
+     */
     public function renderInvalidComponents() {
         if(count($this->components) > 0) {
-            // In the Java version, I wrap the pages current response with a wrapped response but
-            // thats not needed hear cause the output buffer catches the components output.
             foreach($this->components as $id => $c) {
                 $c->getPage()->getRequest()->pushContext();
                 ob_start();
@@ -63,11 +79,14 @@ class AjaxResponseManager {
     }
     
     
-    
-    // not sure if this function is actually used...  it doesn't seem like it would work correctly
+    /**
+     * Force an update on a specified component
+     *
+     * @param Component $c
+     *
+     * @return void
+     */    
     public function renderNow(Component $c) {
-        // In the Java version, I wrap the pages current response with a wrapped response but
-        // thats not needed hear cause the output buffer catches the components output.
         ob_start();
         $c->render();
         $this->response->setUpdate($c->getDivId(),  ob_get_clean());

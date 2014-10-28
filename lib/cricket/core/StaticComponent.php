@@ -27,21 +27,35 @@ abstract class StaticComponent extends Component {
     
     abstract public function renderStatic($inData);
 
-    
+    /**
+     * Set the component's div id
+     * 
+     * @param string $inRenderID
+     * 
+     * @return void
+     */
     public function setRenderID($inRenderID) {
         $this->renderLocalID = $inRenderID;
         $this->renderID = $this->getParent()->getId() . "_" . $this->renderLocalID;
     }
     
+    /**
+     * 
+     */
     public function getRenderID() {
         return $this->renderLocalID;
     }
     
-    
+    /**
+     * @link Container::getDivId()
+     */
     public function getDivId() {
         return "component_" . $this->renderID;
     }
 
+    /**
+     * @link Component::getActionUrl()
+     */
     public function getActionUrl($inActionID) {
         $pathInfo = "{$this->getId()}/{$this->renderLocalID}/{$inActionID}";
         
@@ -49,11 +63,22 @@ abstract class StaticComponent extends Component {
         return $page->getModule()->assembleURL($this->getRequest(),$page->getPageClassName(),$pathInfo,$page->getInstanceID());
     }
 
-    
+    /**
+     * @link Component::render()
+     */
     public function render() {
         $this->renderStatic(null);
     }
     
+    /**
+     * Invalidate this component with the provided data
+     * 
+     * @param mixed $inData
+     * 
+     * @throws \Exception
+     * 
+     * @return void
+     */
     public function invalidateWithData($inData) {
         if($this->getPage()->isAjax()) {
             if(!isset($this->renderLocalID)) {
@@ -67,10 +92,21 @@ abstract class StaticComponent extends Component {
         }
     }
     
+    /**
+     * @link Component::invalidate()
+     */
     public function invalidate() {
         throw new \Exception("Cannot invalidate() a StaticComponent.  Use invalidateWithData()");
     }
     
+    /**
+     * 
+     * @link Container::receiveActionRequest
+     * 
+     * @param array $parts
+     * 
+     * @return void
+     */
     protected function receiveActionRequest($parts) {
         $handled = parent::receiveActionRequest($parts);
         

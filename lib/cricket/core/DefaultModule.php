@@ -21,6 +21,11 @@
 
 namespace cricket\core;
 
+/**
+ * A basic module that pulls all of it's information from the application
+ *
+ */
+
 class DefaultModule extends Module {
         
     public function getPageSearchPaths() {
@@ -31,16 +36,8 @@ class DefaultModule extends Module {
         return "";
     }
     
-    public function getPageClassNameFromPageID($inPageID) {
-        return Application::getInstance()->getPageClassNameFromPageID($inPageID);
-    }
-    
     public function getPageClassPrefix() {
         return Application::getInstance()->getPageClassPrefix();
-    }
-    
-    public function getPageIDFromPageClassName($inPageClassName) {
-        return Application::getInstance()->getPageIDFromPageClassName($this->resolvePageClass($inPageClassName));
     }
 
     public function resolveResourcePath($inResource,$inApplicationContextPath) {

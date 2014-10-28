@@ -26,12 +26,26 @@ class Widget {
         }
     }
 
+    /**
+     * Add content to a specific variable of a widget
+     * 
+     * @param string $inPartName
+     * 
+     * @return void
+     */
     public function add($inPartName) {
         $this->end_part();
         $this->curPart = $inPartName;
         ob_start();
     }
 
+    /**
+     * Terminator for add, ending the current part
+     * 
+     * @link add()
+     * 
+     * @return void
+     */
     public function end_part() {
         if($this->curPart != null) {
             $this->parts[$this->curPart] = ob_get_contents();
@@ -40,6 +54,11 @@ class Widget {
         }
     }
     
+    /**
+     * Terminator for widget
+     * 
+     * @return void
+     */
     public function end() {
         $this->end_part();
             

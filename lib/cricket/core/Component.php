@@ -22,10 +22,25 @@ namespace cricket\core;
 
 abstract class Component extends Container {
     
+	/**
+	 * @param string $inID
+	 * 
+	 * @return void
+	 */
     public function __construct($inID) {
         parent::__construct($inID);
     }
     
+    /**
+     * Assemble an action URL
+     * 
+     * @link Module::assembleURL()
+     * 
+     * @param string $inActionId
+     * @param boolean $inMutable
+     *
+     * @return string Assembled action URL
+     */
     public function getActionUrl($inActionID, $inMutable = true) {
         $pathInfo = "{$this->getId()}/{$inActionID}";
         
@@ -33,12 +48,35 @@ abstract class Component extends Container {
         return $page->getModule()->assembleURL($this->getRequest(),$page->getPageClassName(),$pathInfo,$page->getInstanceID(), $inMutable);
     }
     
+    /**
+     * @return void
+     */
     public abstract function render();
     
+    /**
+     * Invalidate the page
+     * 
+     * @link Page::invalidateComponent()
+     * 
+     * @return void
+     */
     public function invalidate() {
         $this->getPage()->invalidateComponent($this);
     }
     
+    /**
+     * Call renderComponentNow method on page for this component.  Add additional request paramaters
+     * 
+     * @link RequestContext
+     * @link RequestContext::pushContext()
+     * @link RequestContext::setAttribute()
+     * @link Page::renderComponentNow()
+     * @link RequestContext::popContext()
+     * 
+     * @param array $inParams
+     *
+     * @return void
+     */
     public function renderNow($inParams = null) {
         $thisPage = $this->getPage();
         $thisRequest = $thisPage->getRequest();
@@ -53,7 +91,14 @@ abstract class Component extends Container {
         $thisRequest->popContext();
     }
     
-    
+    /**
+     * Detatch component from parent
+     *
+     * @link getParent()
+     * @link removeComponent()
+     *
+     * @return void
+     */
     public function removeFromParent() {
         if($this->getParent() !== null) {
             $this->getParent()->removeComponent($this);

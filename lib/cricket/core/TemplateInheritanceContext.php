@@ -69,7 +69,16 @@ class TemplateInheritanceContext {
         $this->ctx = $inContext;
     }
     
-    
+    /**
+     * Extend a template
+     * 
+     * @todo There was a release in svn cricket that needs updated here
+     * 
+     * @param string $inPath
+     * @param array $additionalParams
+     * 
+     * @return void
+     */
     public function extend_template($inPath,$additionalParams = array()) {
         if(!$this->root) {
             $this->root = new Block(null,null);
@@ -79,6 +88,15 @@ class TemplateInheritanceContext {
         $this->include_template($inPath,$additionalParams);
     }
     
+    /**
+     * Create a template block.  Default data can be specified
+     * 
+     * @link block_end()
+     * 
+     * @param string $inName
+     * 
+     * @return void
+     */
     public function block_start($inName) {
         if($this->root) {
             $buffer = ob_get_clean();
@@ -99,7 +117,13 @@ class TemplateInheritanceContext {
         }
     }    
     
-    
+    /**
+     * End a template block
+     * 
+     * @link block_start()
+     * 
+     * @return void
+     */
     public function block_end() {
         if($this->root) {
             $buffer = ob_get_clean();
@@ -109,11 +133,21 @@ class TemplateInheritanceContext {
         }
     }
     
+    /**
+     * Create a template block with no default content
+     * 
+     * @param string $inName
+     */
     public function block($inName) {
         $this->block_start($inName);
         $this->block_end();
     }
     
+    /**
+     * Flush output
+     * 
+     * @return void
+     */
     public function flush() {
         if($this->root) {
             $this->root->output();
@@ -121,19 +155,35 @@ class TemplateInheritanceContext {
         }
     }
 
-    
+    /**
+     * Render a widget from within a template
+     *  
+     * @param string $inName
+     * @param string $inFirstPart
+     *
+     * @return Widget
+     */
     public function widget($inName,$inFirstPart) {
         return new Widget($this,$inName,$inFirstPart);
     }
     
-    
+    /**
+     * Include template with additional params
+     * 
+     * @param string $inPath
+     * @param array $additionalParams
+     * 
+     * @return void
+     */
     public function include_template($inPath,$additionalParams = array()) {
         $additionalParams['tpl'] = $this;
         $this->ctx->tpl_include($inPath,$additionalParams);
     }
 
 
-    /** @return CricketContext */
+    /** 
+     * @return CricketContext 
+     */
     public function getCricketContext() {
         return $this->ctx;
     }

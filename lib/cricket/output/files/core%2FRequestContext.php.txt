@@ -21,6 +21,11 @@
 
 namespace cricket\core;
 
+/**
+ * Request
+ *
+ */
+
 class RequestContext {
     private $mContextStack;
     
@@ -31,6 +36,16 @@ class RequestContext {
     private $extResourcePaths;
     private $dispatcherUri;
     
+    /**
+     * 
+     * @param string $inContextUrl
+     * @param string $inContextRoot
+     * @param string $inContextUri
+     * @param string $dispatcherUri
+     * @param array $externalResourcePaths
+     * 
+     * @return void
+     */
     public function __construct($inContextUrl,$inContextRoot,$inContextUri,$dispatcherUri,$externalResourcePaths) {
         $this->mContextStack = array(array());
         $this->contextUrl = $inContextUrl;
@@ -42,15 +57,33 @@ class RequestContext {
         $this->dispatcherUri = $dispatcherUri;
     }
     
-    
+    /**
+     * Push array to context stack
+     * 
+     * @todo Not yet implemented?
+     * 
+     * @return null
+     */
     public function pushContext() {
         $this->mContextStack[] = array();
     }
     
+    /**
+     * Return top of context stack
+     * 
+     * @return array
+     */
     public function popContext() {
         array_pop($this->mContextStack);
     }
     
+    /**
+     * Search context stack for attribute
+     * 
+     * @param string $name
+     * 
+     * @return mixed
+     */
     public function getAttribute($name) {
         for($z = count($this->mContextStack) - 1 ; $z >= 0 ; $z--) {
             if(isset($this->mContextStack[$z][$name])) {
@@ -60,23 +93,54 @@ class RequestContext {
         return null;
     }
     
+    /**
+     * Set context attribute to top of stack
+     * 
+     * @param string $name
+     * @param mixed $o
+     * 
+     * @return void
+     */
     public function setAttribute($name,$o) {
         $this->mContextStack[count($this->mContextStack) - 1][$name] = $o;
     }
     
-    
+    /**
+     * Get server's path info
+     * 
+     * @return string
+     */
     public function getPathInfo() {
         return isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : "";
     }
     
+    /**
+     * Get server's request method
+     * 
+     * @return string
+     */
     public function getMethod() {
         return $_SERVER["REQUEST_METHOD"];
     }
     
+    /**
+     * Return server's request URI
+     *
+     * @todo This may be too apache specific
+     * 
+     * @return string
+     */
     public function getRequestURI() {
-        return $_SERVER['REQUEST_URI']; // TODO: this may be apache specific if we ever really care about any other servers
+        return $_SERVER['REQUEST_URI']; 
     }
     
+    /**
+     * Get server's key from HTTP header
+     * 
+     * @param string $inHeader
+     * 
+     * @return string
+     */
     public function getHeader($inHeader) {
         $inHeader = strtoupper($inHeader);
         $inHeader = str_replace("-", "_", $inHeader);
@@ -88,6 +152,13 @@ class RequestContext {
         }
     }
     
+    /**
+     * Retrieve key value pair from session
+     * 
+     * @param string $inKey
+     * 
+     * @return mixed
+     */
     public function getSessionAttribute($inKey) {
         Application::getInstance()->ensureSession();
         $result = (isset($_SESSION[$inKey])) ? $_SESSION[$inKey] : null;
@@ -95,22 +166,45 @@ class RequestContext {
         return $result;
     }
     
+    /**
+     * Insert key value pair into session
+     *
+     * @param string $inKey
+     * @param mixed $inValue
+     * 
+     * @return void
+     */
     public function setSessionAttribute($inKey,$value) {
         Application::getInstance()->ensureSession();
         $_SESSION[$inKey] = $value;
         Application::getInstance()->attemptSessionClose();
     }
     
+    /**
+     * Clear key value pair from session
+     *
+     * @param string $inKey
+     *
+     * @return void
+     */
     public function clearSessionAttribute($inKey) {
         unset($_SESSION[$inKey]);
     }
     
-    
+    /**
+     * Return the dispatcher URI
+     *
+     * @return string
+     */
     public function getDispatchUrl() {
         return $this->getAttribute("contextUrl") . $this->dispatcherUri;
     }
     
-    
+    /**
+     * Returns context stack as flat array
+     *
+     * @return array
+     */
     public function getFlattenedMap() {
         $result = null;
         foreach($this->mContextStack as $layer) {
@@ -126,21 +220,41 @@ class RequestContext {
         return $result;
     }
     
-    
+    /**
+     * Return the context URL
+     *
+     * @return string
+     */    
     public function getContextUrl() {
         return $this->contextUrl;
     }
     
+    /**
+     * Return the Context URI
+     *
+     * @return string
+     */
     public function getContextUri() {
         return $this->contextUri;
     }
     
+    /**
+     * Return the context root
+     *
+     * @return string
+     */
     public function getContextRoot() {
         return $this->contextRoot;
     }
     
     
-    // returns URL
+    /**
+     * Translates a path into url
+     * 
+     * @param $fsPath
+     *
+     * @return URL
+     */
     public function translatePath($fsPath) {
         $result = str_replace($this->getContextRoot(), "", $fsPath);
         if($result != $fsPath) {
@@ -151,7 +265,12 @@ class RequestContext {
                     $path = realpath("{$this->getContextRoot()}/{$path}");
                 }
                 
+                if (is_link($path)) {
+                	$path = substr(readlink($path),0,-1);
+                }
+
                 $result = str_replace($path,"",$fsPath);
+                                
                 if($result != $fsPath) {
                     return $this->getContextUrl() . "/$alias$result";
                 }

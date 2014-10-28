@@ -1,0 +1,3000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/cricket.html">\cricket</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">484</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">15</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1777271183"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-1777271183" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1909528361"></a>
+                                <a href="../namespaces/cricket.html" style="margin-left: 30px; padding-left: 0">cricket</a>
+            </div>
+            <div id="namespace-1909528361" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-203822946"></a>
+                                <a href="../namespaces/cricket.components.html" style="margin-left: 30px; padding-left: 0">components</a>
+            </div>
+            <div id="namespace-203822946" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/cricket.components.ConfirmationButton.html">ConfirmationButton</a></li>
+                                                    <li class="class"><a href="../classes/cricket.components.ConfirmationDialog.html">ConfirmationDialog</a></li>
+                                                    <li class="class"><a href="../classes/cricket.components.DialogComponent.html">DialogComponent</a></li>
+                                                    <li class="class"><a href="../classes/cricket.components.Iframe.html">Iframe</a></li>
+                                                    <li class="class"><a href="../classes/cricket.components.ModalComponent.html">ModalComponent</a></li>
+                                                    <li class="class"><a href="../classes/cricket.components.Slug.html">Slug</a></li>
+                                                    <li class="class"><a href="../classes/cricket.components.Table.html">Table</a></li>
+                                                    <li class="class"><a href="../classes/cricket.components.Table_DataSet.html">Table_DataSet</a></li>
+                                                    <li class="class"><a href="../classes/cricket.components.Table_Sort.html">Table_Sort</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1804098600"></a>
+                                <a href="../namespaces/cricket.core.html" style="margin-left: 30px; padding-left: 0">core</a>
+            </div>
+            <div id="namespace-1804098600" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-160469795"></a>
+                                <a href="../namespaces/cricket.core.page_store.html" style="margin-left: 30px; padding-left: 0">page_store</a>
+            </div>
+            <div id="namespace-160469795" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/cricket.core.page_store.PageStoreHandler.html">PageStoreHandler</a></li>
+                                                                                                    <li class="class"><a href="../classes/cricket.core.page_store.FSPageStoreHandler.html">FSPageStoreHandler</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.page_store.SQLPageStoreHandler.html">SQLPageStoreHandler</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/cricket.core.MessageReceiver.html">MessageReceiver</a></li>
+                                                                                                    <li class="class"><a href="../classes/cricket.core.AjaxResponse.html">AjaxResponse</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.AjaxResponseManager.html">AjaxResponseManager</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.Application.html">Application</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.Block.html">Block</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.Component.html">Component</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.Container.html">Container</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.CricketBehavior.html">CricketBehavior</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.CricketContext.html">CricketContext</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.DefaultModule.html">DefaultModule</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.Dispatcher.html">Dispatcher</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.MessageCenter.html">MessageCenter</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.Module.html">Module</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.Page.html">Page</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.RequestContext.html">RequestContext</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.ResponseContext.html">ResponseContext</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.SearchPathIterator.html">SearchPathIterator</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.StaticComponent.html">StaticComponent</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.TemplateInheritanceContext.html">TemplateInheritanceContext</a></li>
+                                                    <li class="class"><a href="../classes/cricket.core.Widget.html">Widget</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1607614554"></a>
+                                <a href="../namespaces/cricket.utils.html" style="margin-left: 30px; padding-left: 0">utils</a>
+            </div>
+            <div id="namespace-1607614554" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/cricket.utils.ExitHandler.html">ExitHandler</a></li>
+                                                    <li class="class"><a href="../classes/cricket.utils.Translator.html">Translator</a></li>
+                                                    <li class="class"><a href="../classes/cricket.utils.Uploads.html">Uploads</a></li>
+                                                    <li class="class"><a href="../classes/cricket.utils.URL.html">URL</a></li>
+                                                    <li class="class"><a href="../classes/cricket.utils.Utils.html">Utils</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/cricket.core.html">\cricket\core</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\cricket\core</small>StaticComponent</h1>
+                    <p><em>The core class of a cricket object</em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/cricket.core.Container.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/cricket.core.StaticComponent.html#method_getActionUrl" class="">getActionUrl()</a><br />
+                                                                    <a href="../classes/cricket.core.StaticComponent.html#method_render" class="">render()</a><br />
+                                                                    <a href="../classes/cricket.core.StaticComponent.html#method_invalidate" class="">invalidate()</a><br />
+                                                                    <a href="../classes/cricket.core.Component.html#method_renderNow" class="">renderNow()</a><br />
+                                                                    <a href="../classes/cricket.core.Component.html#method_removeFromParent" class="">removeFromParent()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method___sleep" class="">__sleep()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_getParent" class="">getParent()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_getId" class="">getId()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_getLocalId" class="">getLocalId()</a><br />
+                                                                    <a href="../classes/cricket.core.StaticComponent.html#method_getDivId" class="">getDivId()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_getDivClass" class="">getDivClass()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_setRedirect" class="">setRedirect()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_broadcastMessage" class="">broadcastMessage()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_broadcastMessageToTree" class="">broadcastMessageToTree()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_messageReceived" class="">messageReceived()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_resolveChildID" class="">resolveChildID()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_addComponent" class="">addComponent()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_removeComponent" class="">removeComponent()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_removeAllComponents" class="">removeAllComponents()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_addDialogComponent" class="">addDialogComponent()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_getComponent" class="">getComponent()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_getPage" class="">getPage()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_findComponent" class="">findComponent()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_resolveResourceUrl" class="">resolveResourceUrl()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_resolveTemplatePath" class="">resolveTemplatePath()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_resourceUrl" class="">resourceUrl()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_resourcePath" class="">resourcePath()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_renderTemplateToString" class="">renderTemplateToString()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_contributeClassHierarchyToHead" class="">contributeClassHierarchyToHead()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_contributeClassHierarchyToHeadFromClass" class="">contributeClassHierarchyToHeadFromClass()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_contributeComponentsToHead" class="">contributeComponentsToHead()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_getRequest" class="">getRequest()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_getResponse" class="">getResponse()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_getParams" class="">getParams()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_getFiles" class="">getFiles()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_getParameter" class="">getParameter()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_getIntParameter" class="">getIntParameter()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_getBoolParameter" class="">getBoolParameter()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_getAjaxResponse" class="">getAjaxResponse()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_addDynamicAjaxComponent" class="">addDynamicAjaxComponent()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_renderDynamicStaticComponent" class="">renderDynamicStaticComponent()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_putSession" class="">putSession()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_getSession" class="">getSession()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_putAppSession" class="">putAppSession()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_getAppSession" class="">getAppSession()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_clearAppSession" class="">clearAppSession()</a><br />
+                                                                    <a href="../classes/cricket.core.StaticComponent.html#method_renderStatic" class="">renderStatic()</a><br />
+                                                                    <a href="../classes/cricket.core.StaticComponent.html#method_setRenderID" class="">setRenderID()</a><br />
+                                                                    <a href="../classes/cricket.core.StaticComponent.html#method_getRenderID" class="">getRenderID()</a><br />
+                                                                    <a href="../classes/cricket.core.StaticComponent.html#method_invalidateWithData" class="">invalidateWithData()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/cricket.core.Container.html#property__components" class="">$_components</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#property__id" class="">$_id</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#property__localID" class="">$_localID</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#property__parent" class="">$_parent</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/cricket.core.Container.html#constant_DYNAMIC_REPLACE" class="">DYNAMIC_REPLACE</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#constant_DYNAMIC_APPEND" class="">DYNAMIC_APPEND</a><br />
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <a href="../classes/cricket.core.Container.html#method_getTransientVariables" class="">getTransientVariables()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_receiveMessage" class="">receiveMessage()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_setChildIDs" class="">setChildIDs()</a><br />
+                                                                    <a href="../classes/cricket.core.StaticComponent.html#method_receiveActionRequest" class="">receiveActionRequest()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_addedToParent" class="">addedToParent()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_locateTemplate" class="">locateTemplate()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_renderFunction" class="">renderFunction()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_renderTemplate" class="">renderTemplate()</a><br />
+                                                                    <a href="../classes/cricket.core.Container.html#method_renderJSON" class="">renderJSON()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/cricket.core.StaticComponent.html#property_renderLocalID" class="">$renderLocalID</a><br />
+                                                                    <a href="../classes/cricket.core.StaticComponent.html#property_renderID" class="">$renderID</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                            <span class="label label-info">abstract</span>
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/core.StaticComponent.html"><div class="path-wrapper">core/StaticComponent.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+                                        <div class="namespace-wrapper"><a href="../classes/cricket.core.Container.html">\cricket\core\Container</a></div>
+                                                                    
+                                        <div class="namespace-wrapper"><a href="../classes/cricket.core.Component.html">\cricket\core\Component</a></div>
+                                                                                                    <div class="namespace-wrapper">\cricket\core\StaticComponent</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                                    <a id="constants" name="constants"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Constants</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_DYNAMIC_REPLACE" name="constant_DYNAMIC_REPLACE" class="anchor"></a>
+            <article id="constant_DYNAMIC_REPLACE" class="constant">
+                <h3 class="">DYNAMIC_REPLACE</h3>
+                <pre class="signature">DYNAMIC_REPLACE</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_DYNAMIC_APPEND" name="constant_DYNAMIC_APPEND" class="anchor"></a>
+            <article id="constant_DYNAMIC_APPEND" class="constant">
+                <h3 class="">DYNAMIC_APPEND</h3>
+                <pre class="signature">DYNAMIC_APPEND</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property__components" name="property__components" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$_components</h3>
+                <pre class="signature">$_components : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property__id" name="property__id" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$_id</h3>
+                <pre class="signature">$_id : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property__localID" name="property__localID" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$_localID</h3>
+                <pre class="signature">$_localID : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property__parent" name="property__parent" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$_parent</h3>
+                <pre class="signature">$_parent : \cricket\core\Container</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                <a href="../classes/cricket.core.Container.html">\cricket\core\Container</a>
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_renderLocalID" name="property_renderLocalID" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$renderLocalID</h3>
+                <pre class="signature">$renderLocalID : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_renderID" name="property_renderID" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$renderID</h3>
+                <pre class="signature">$renderID : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct(  <span class="argument">$inID</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$inID </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getActionUrl" name="method_getActionUrl" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getActionUrl()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getActionUrl(  <span class="argument">$inActionID</span>) : string</pre>
+                <p><em>Assemble an action URL</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$inActionID </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Assembled action URL</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="Component::getActionUrl()"><span class="namespace-wrapper">Component::getActionUrl()</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_render" name="method_render" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">render()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">render() : void</pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="Component::render()"><span class="namespace-wrapper">Component::render()</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_invalidate" name="method_invalidate" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">invalidate()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">invalidate() : void</pre>
+                <p><em>Invalidate the page</em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="Component::invalidate()"><span class="namespace-wrapper">Component::invalidate()</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_renderNow" name="method_renderNow" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">renderNow()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">renderNow(array  <span class="argument">$inParams = null</span>) : void</pre>
+                <p><em>Call renderComponentNow method on page for this component.  Add additional request paramaters</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$inParams </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Component.html"><div class="path-wrapper">\cricket\core\Component</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="RequestContext"><span class="namespace-wrapper">RequestContext</span></a></dd>
+                                            <dd><a href="RequestContext::pushContext()"><span class="namespace-wrapper">RequestContext::pushContext()</span></a></dd>
+                                            <dd><a href="RequestContext::setAttribute()"><span class="namespace-wrapper">RequestContext::setAttribute()</span></a></dd>
+                                            <dd><a href="Page::renderComponentNow()"><span class="namespace-wrapper">Page::renderComponentNow()</span></a></dd>
+                                            <dd><a href="RequestContext::popContext()"><span class="namespace-wrapper">RequestContext::popContext()</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_removeFromParent" name="method_removeFromParent" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">removeFromParent()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">removeFromParent() : void</pre>
+                <p><em>Detatch component from parent</em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Component.html"><div class="path-wrapper">\cricket\core\Component</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="getParent()"><span class="namespace-wrapper">getParent()</span></a></dd>
+                                            <dd><a href="removeComponent()"><span class="namespace-wrapper">removeComponent()</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___sleep" name="method___sleep" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__sleep()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__sleep() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getParent" name="method_getParent" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getParent()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getParent() : \cricket\core\Container</pre>
+                <p><em>Return parent container</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/cricket.core.Container.html">\cricket\core\Container</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getId" name="method_getId" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getId()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getId() : string</pre>
+                <p><em></em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getLocalId" name="method_getLocalId" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getLocalId()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getLocalId() : string</pre>
+                <p><em>Return local id</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getDivId" name="method_getDivId" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getDivId()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getDivId() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="Container::getDivId()"><span class="namespace-wrapper">Container::getDivId()</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getDivClass" name="method_getDivClass" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getDivClass()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getDivClass() : string</pre>
+                <p><em>Return class of container&#039;s div</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setRedirect" name="method_setRedirect" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setRedirect()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setRedirect(string  <span class="argument">$inUrl</span>) : void</pre>
+                <p><em>Set a redirect, discovering if it should be done through ajax</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inUrl </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="AjaxResponse"><span class="namespace-wrapper">AjaxResponse</span></a></dd>
+                                            <dd><a href="ResponseContext::setRedirect()"><span class="namespace-wrapper">ResponseContext::setRedirect()</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_broadcastMessage" name="method_broadcastMessage" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">broadcastMessage()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">broadcastMessage(string  <span class="argument">$inMessage</span>, mixed  <span class="argument">$inData = null</span>) : void</pre>
+                <p><em>Broadcast a message</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inMessage </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$inData </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="MessageCenter::broadcastMessage"><span class="namespace-wrapper">MessageCenter::broadcastMessage</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_broadcastMessageToTree" name="method_broadcastMessageToTree" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">broadcastMessageToTree()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">broadcastMessageToTree(string  <span class="argument">$inMessage</span>, mixed  <span class="argument">$inData</span>, \cricket\core\Container  <span class="argument">$inSender</span>) : void</pre>
+                <p><em>Broadcast a message to the component tree</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inMessage </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$inData </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td><a href="../classes/cricket.core.Container.html">\cricket\core\Container</a></td>
+                                <td>$inSender </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="broadcastMessageToTree"><span class="namespace-wrapper">broadcastMessageToTree</span></a></dd>
+                                            <dd><a href="receiveMessage"><span class="namespace-wrapper">receiveMessage</span></a></dd>
+                                            <dd><a href="messageReceived"><span class="namespace-wrapper">messageReceived</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_messageReceived" name="method_messageReceived" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">messageReceived()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">messageReceived(  <span class="argument">$inMessage</span>,   <span class="argument">$inData</span>,   <span class="argument">$inSender</span>) : void</pre>
+                <p><em>Used to receive message from non-containers</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$inMessage </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$inData </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$inSender </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="\cricket\core\MessageReceiver::messageReceived()"><span class="namespace-wrapper">\cricket\core\MessageReceiver::messageReceived()</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_resolveChildID" name="method_resolveChildID" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">resolveChildID()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">resolveChildID(string  <span class="argument">$inLocalChildID</span>) : string</pre>
+                <p><em>Resolve a child</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inLocalChildID </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_addComponent" name="method_addComponent" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">addComponent()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">addComponent(\cricket\core\Component  <span class="argument">$newComponent</span>) : void</pre>
+                <p><em>Add a child component</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/cricket.core.Component.html">\cricket\core\Component</a></td>
+                                <td>$newComponent </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_removeComponent" name="method_removeComponent" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">removeComponent()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">removeComponent(\cricket\core\Component  <span class="argument">$c</span>) : void</pre>
+                <p><em>Remove a child component</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/cricket.core.Component.html">\cricket\core\Component</a></td>
+                                <td>$c </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_removeAllComponents" name="method_removeAllComponents" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">removeAllComponents()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">removeAllComponents() : void</pre>
+                <p><em>Remove all child component</em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_addDialogComponent" name="method_addDialogComponent" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">addDialogComponent()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">addDialogComponent(\cricket\components\DialogComponent  <span class="argument">$newComponent</span>) : void</pre>
+                <p><em>Add a DialogComponent and call it&#039;s open method</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/cricket.components.DialogComponent.html">\cricket\components\DialogComponent</a></td>
+                                <td>$newComponent </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="DialogComponent::openDialog()"><span class="namespace-wrapper">DialogComponent::openDialog()</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getComponent" name="method_getComponent" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getComponent()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getComponent(string  <span class="argument">$localID</span>) : \cricket\core\Component</pre>
+                <p><em>Get a component specified by its local ID</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$localID </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/cricket.core.Component.html">\cricket\core\Component</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getPage" name="method_getPage" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getPage()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getPage() : \cricket\core\Page</pre>
+                <p><em>Return the Page the component exists on</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/cricket.core.Page.html">\cricket\core\Page</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_findComponent" name="method_findComponent" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">findComponent()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">findComponent(string  <span class="argument">$inID</span>) : \cricket\core\Component</pre>
+                <p><em>Get a component specified by its ID.  Traverses the component tree.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inID </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/cricket.core.Component.html">\cricket\core\Component</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_resolveResourceUrl" name="method_resolveResourceUrl" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">resolveResourceUrl()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">resolveResourceUrl(\cricket\core\Page  <span class="argument">$page</span>, string  <span class="argument">$class</span>, string  <span class="argument">$path</span>) : string</pre>
+                <p><em>Translate a resource into a file system path</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/cricket.core.Page.html">\cricket\core\Page</a></td>
+                                <td>$page </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$class </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$path </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_resolveTemplatePath" name="method_resolveTemplatePath" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">resolveTemplatePath()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">resolveTemplatePath(\cricket\core\Page  <span class="argument">$page</span>, string  <span class="argument">$class</span>, string  <span class="argument">$path</span>, array  <span class="argument">$inParams</span>, boolean  <span class="argument">$showMissingTemplate = true</span>) : string</pre>
+                <p><em>Resolve the file system path of a template</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/cricket.core.Page.html">\cricket\core\Page</a></td>
+                                <td>$page </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$class </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$path </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$inParams </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$showMissingTemplate </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_resourceUrl" name="method_resourceUrl" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">resourceUrl()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">resourceUrl(string  <span class="argument">$inPath</span>) : string</pre>
+                <p><em>Return the URL of a resource</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inPath </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="resolveResourceUrl()"><span class="namespace-wrapper">resolveResourceUrl()</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_resourcePath" name="method_resourcePath" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">resourcePath()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">resourcePath(string  <span class="argument">$inPath</span>) : string</pre>
+                <p><em>Return the path of a resource</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inPath </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="resolveTemplatePath()"><span class="namespace-wrapper">resolveTemplatePath()</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_renderTemplateToString" name="method_renderTemplateToString" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">renderTemplateToString()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">renderTemplateToString(string  <span class="argument">$inTemplatePath</span>, array  <span class="argument">$inParamsArray = array()</span>) : string</pre>
+                <p><em>Renders template to a string instead of to the screen.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inTemplatePath </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$inParamsArray </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_contributeClassHierarchyToHead" name="method_contributeClassHierarchyToHead" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">contributeClassHierarchyToHead()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">contributeClassHierarchyToHead(array  <span class="argument">$added</span>, array  <span class="argument">$results</span>) : void</pre>
+                <p><em>Call contributeToHead on each class in the hierarchy</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$added </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$results </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_contributeClassHierarchyToHeadFromClass" name="method_contributeClassHierarchyToHeadFromClass" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">contributeClassHierarchyToHeadFromClass()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">contributeClassHierarchyToHeadFromClass(string  <span class="argument">$class</span>, \cricket\core\Page  <span class="argument">$page</span>, array  <span class="argument">$added</span>, array  <span class="argument">$results</span>) : void</pre>
+                <p><em>Add this component&#039;s contributions to the head</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$class </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td><a href="../classes/cricket.core.Page.html">\cricket\core\Page</a></td>
+                                <td>$page </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$added </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$results </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_contributeComponentsToHead" name="method_contributeComponentsToHead" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">contributeComponentsToHead()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">contributeComponentsToHead(array  <span class="argument">$added</span>, array  <span class="argument">$results</span>) : void</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$added </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$results </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getRequest" name="method_getRequest" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getRequest()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getRequest() : \cricket\core\RequestContext</pre>
+                <p><em>Return the request</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/cricket.core.RequestContext.html">\cricket\core\RequestContext</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getResponse" name="method_getResponse" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getResponse()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getResponse() : \cricket\core\ResponseContext</pre>
+                <p><em>Return the response</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/cricket.core.ResponseContext.html">\cricket\core\ResponseContext</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getParams" name="method_getParams" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getParams()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getParams() : array</pre>
+                <p><em>Return all items of $_REQUEST</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getFiles" name="method_getFiles" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getFiles()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getFiles() : array</pre>
+                <p><em>Return all items of $_FILES</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getParameter" name="method_getParameter" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getParameter()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getParameter(string  <span class="argument">$inName</span>, mixed  <span class="argument">$inDefaultValue = null</span>) : mixed</pre>
+                <p><em>Return a parameter from $_REQUEST</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inName </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$inDefaultValue </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="getIntParameter"><span class="namespace-wrapper">getIntParameter</span></a></dd>
+                                            <dd><a href="getBoolParameter"><span class="namespace-wrapper">getBoolParameter</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getIntParameter" name="method_getIntParameter" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getIntParameter()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getIntParameter(string  <span class="argument">$inName</span>, integer  <span class="argument">$inDefaultValue = null</span>) : integer</pre>
+                <p><em>Return an integer parameter from $_REQUEST</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inName </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$inDefaultValue </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    integer
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="getParameter"><span class="namespace-wrapper">getParameter</span></a></dd>
+                                            <dd><a href="getBoolParameter"><span class="namespace-wrapper">getBoolParameter</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getBoolParameter" name="method_getBoolParameter" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getBoolParameter()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getBoolParameter(string  <span class="argument">$inName</span>, boolean  <span class="argument">$inDefaultValue = null</span>) : boolean</pre>
+                <p><em>Return a boolean parameter from $_REQUEST</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inName </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$inDefaultValue </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="getParameter"><span class="namespace-wrapper">getParameter</span></a></dd>
+                                            <dd><a href="getIntParameter"><span class="namespace-wrapper">getIntParameter</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getAjaxResponse" name="method_getAjaxResponse" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getAjaxResponse()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getAjaxResponse() : \cricket\core\AjaxResponse</pre>
+                <p><em></em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/cricket.core.AjaxResponse.html">\cricket\core\AjaxResponse</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_addDynamicAjaxComponent" name="method_addDynamicAjaxComponent" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">addDynamicAjaxComponent()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">addDynamicAjaxComponent(string  <span class="argument">$inContainerElementID</span>, \cricket\core\Component  <span class="argument">$inNewComponent</span>, string  <span class="argument">$inMode = self::DYNAMIC_REPLACE</span>) : void</pre>
+                <p><em>Render a component into the ahax response.  Useful when you don&#039;t want to invalidate the parent component</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inContainerElementID </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td><a href="../classes/cricket.core.Component.html">\cricket\core\Component</a></td>
+                                <td>$inNewComponent </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inMode </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_renderDynamicStaticComponent" name="method_renderDynamicStaticComponent" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">renderDynamicStaticComponent()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">renderDynamicStaticComponent(string  <span class="argument">$inContainerElementID</span>, string  <span class="argument">$inComponentID</span>, string  <span class="argument">$inRenderID</span>, mixed  <span class="argument">$inRenderData</span>, string  <span class="argument">$inMode = self::DYNAMIC_REPLACE</span>) : void</pre>
+                <p><em>Render a StaticComponent dynamically</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inContainerElementID </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inComponentID </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inRenderID </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$inRenderData </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inMode </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Exception</dt>
+                            <dd></dd>
+                                                                    </dl>
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="Page::renderStaticComponent"><span class="namespace-wrapper">Page::renderStaticComponent</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_putSession" name="method_putSession" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">putSession()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">putSession(string  <span class="argument">$key</span>, mixed  <span class="argument">$value</span>) : void</pre>
+                <p><em>Insert a key value pair into the session</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$value </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="getSession()"><span class="namespace-wrapper">getSession()</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getSession" name="method_getSession" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getSession()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getSession(string  <span class="argument">$key</span>) : mixed</pre>
+                <p><em>Retrieve a key value pair from the session</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="putSession()"><span class="namespace-wrapper">putSession()</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_putAppSession" name="method_putAppSession" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">putAppSession()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">putAppSession(string  <span class="argument">$key</span>, mixed  <span class="argument">$value</span>) : void</pre>
+                <p><em>Place key value pair into the session</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$value </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getAppSession" name="method_getAppSession" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getAppSession()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getAppSession(string  <span class="argument">$key</span>) : mixed</pre>
+                <p><em>Retrieve key value pair into the session</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_clearAppSession" name="method_clearAppSession" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">clearAppSession()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">clearAppSession(string  <span class="argument">$key</span>) : void</pre>
+                <p><em>Clear a key value pair from the session</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_renderStatic" name="method_renderStatic" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">renderStatic()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">renderStatic(  <span class="argument">$inData</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$inData </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                        <span class="label label-info">abstract</span>
+                                                <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setRenderID" name="method_setRenderID" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setRenderID()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setRenderID(string  <span class="argument">$inRenderID</span>) : void</pre>
+                <p><em>Set the component&#039;s div id</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inRenderID </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getRenderID" name="method_getRenderID" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getRenderID()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getRenderID() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_invalidateWithData" name="method_invalidateWithData" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">invalidateWithData()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">invalidateWithData(mixed  <span class="argument">$inData</span>) : void</pre>
+                <p><em>Invalidate this component with the provided data</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$inData </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Exception</dt>
+                            <dd></dd>
+                                                                    </dl>
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getTransientVariables" name="method_getTransientVariables" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">getTransientVariables()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getTransientVariables() : array</pre>
+                <p><em>Return transient variables</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            todo
+                        </th>
+                        <td>
+                                                                                            <p>Not yet implemented</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_receiveMessage" name="method_receiveMessage" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">receiveMessage()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">receiveMessage(string  <span class="argument">$inMessage</span>, mixed  <span class="argument">$inData</span>, \cricket\core\Container  <span class="argument">$inSender</span>) : void</pre>
+                <p><em>Receive a broadcast message</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inMessage </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$inData </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td><a href="../classes/cricket.core.Container.html">\cricket\core\Container</a></td>
+                                <td>$inSender </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setChildIDs" name="method_setChildIDs" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">setChildIDs()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setChildIDs() : void</pre>
+                <p><em>Recursively set child ids</em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="resolveChildId()"><span class="namespace-wrapper">resolveChildId()</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_receiveActionRequest" name="method_receiveActionRequest" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">receiveActionRequest()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">receiveActionRequest(array  <span class="argument">$parts</span>) : void</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$parts </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href="Container::receiveActionRequest"><span class="namespace-wrapper">Container::receiveActionRequest</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_addedToParent" name="method_addedToParent" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">addedToParent()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">addedToParent() : void</pre>
+                <p><em>Execute when component has been added to a parent</em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_locateTemplate" name="method_locateTemplate" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">locateTemplate()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">locateTemplate(string  <span class="argument">$inTemplatePath</span>, array  <span class="argument">$inParamsArray</span>) : string</pre>
+                <p><em>Locate a template</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inTemplatePath </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$inParamsArray </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="resolveTemplatePath()"><span class="namespace-wrapper">resolveTemplatePath()</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_renderFunction" name="method_renderFunction" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">renderFunction()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">renderFunction(\cricket\core\function  <span class="argument">$inFunction</span>) : void</pre>
+                <p><em>Render through an anonmous function rather than through the template.  Useful in the case where template is unnecessary.</em></p>
+                <p>public function render() {</p>
+<pre><code>    $self = $this;
+    $this-&gt;renderFunction(function(\cricket\core\CricketContext $cricket,\cricket\core\TemplateInheritanceContext $tpl) use($self) {
+        ...
+    });</code></pre>
+<p>}</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\cricket\core\function</td>
+                                <td>$inFunction </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href="cricket\core\CricketContext"><span class="namespace-wrapper">cricket\core\CricketContext</span></a></dd>
+                                            <dd><a href="TemplateInheritanceContext"><span class="namespace-wrapper">TemplateInheritanceContext</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_renderTemplate" name="method_renderTemplate" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">renderTemplate()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">renderTemplate(string  <span class="argument">$inTemplatePath</span>, array  <span class="argument">$inParamsArray = array()</span>) : void</pre>
+                <p><em>Render through use of a template file.  Array keys are callable by name in the template.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inTemplatePath </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$inParamsArray </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_renderJSON" name="method_renderJSON" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">renderJSON()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">renderJSON(array  <span class="argument">$inArray</span>) : string</pre>
+                <p><em>Render as JSON</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$inArray </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/cricket.core.Container.html"><div class="path-wrapper">\cricket\core\Container</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">StaticComponent.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/core/StaticComponent.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/cricket.html">\cricket</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on October 28th, 2014 at 14:22.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

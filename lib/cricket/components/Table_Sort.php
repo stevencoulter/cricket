@@ -21,6 +21,12 @@
 
 namespace cricket\components;
 
+/**
+ * A class to hold a collection of keys and orders from which to sort a table.
+ * 
+ * This class contains methods callable from tables getDataSet method to do the sorting for you -- sql, propel, array key, array value
+ *
+ */
 
 class Table_Sort {
     public $desc;

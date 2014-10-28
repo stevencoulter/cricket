@@ -23,7 +23,7 @@ namespace cricket\core;
 
 use cricket\core\page_store\PageStoreHandler;
 use cricket\core\page_store\FSPageStoreHandler;
-
+use cricket\utils\Translator;
 
 class Application {
     ////////////// CONFIG KEYS //////////////////
@@ -56,6 +56,7 @@ class Application {
     const PHP_SESSION = 'php_session';
     const DB_SESSION = 'db_session';
     
+    /** @var array */
     private $config;
     private $sessionMode = self::PHP_SESSION;
     private $dbSessionConfig = array();
@@ -69,7 +70,10 @@ class Application {
     /** @var PageStoreHandler */
     private $pageStoreHandler;
     
-    
+    /**
+     *
+     * @return Application
+     */
     static public function createApplication() {
         global $APPLICATION;
         
@@ -80,6 +84,12 @@ class Application {
         return $APPLICATION;
     }
     
+    /**
+     *
+     * @param array $inConfig
+     *
+     * @return void
+     */
     public function __construct($inConfig = array()) {
         self::$sInstance = $this;
 
@@ -105,18 +115,48 @@ class Application {
         //$this->startSession();
     }
     
+    /**
+     * Set to be mutable
+     * 
+     * @see isMutable()
+     *
+     * @param boolean $inMutable
+     *
+     * @return void
+     */
     public function setMutable($inMutable) {
      	$this->sMutable = $inMutable;
     }
     
+    /**
+     * Semaphore used for asycnronous calls
+     *
+     * @see setMutable()
+     *
+     * @return boolean
+     */
    	public function isMutable() {
    		return $this->sMutable;
    	}
-    
+   	
+   	/**
+   	 * Returns the default module class name
+   	 * 
+   	 * @see DefaultModule
+   	 *
+   	 * @return string
+   	 */
     public function getDefaultModuleClass() {
         return "cricket\\core\\DefaultModule";
     }
     
+    /**
+     * Returns the default dispatcher script name
+     *
+     * @param boolean $inUsePHPExtension
+     *
+     * @return string
+     */
     protected function getDefaultDispatchScriptName($inUsePHPExtension) {
         if($inUsePHPExtension) {
             return "page.php";
@@ -125,11 +165,32 @@ class Application {
         }
     }
     
+    /**
+     * Constrict the default module
+     * 
+     * @see getDefaultModuleClass()
+     *
+     * @param string $inContextRootURL
+     * @param boolean $inUsePHPExtension
+     *
+     * @return Module
+     */
     protected function constructDefaultModule($inContextRootURL,$inUsePHPExtension) {
         $qName = $this->getDefaultModuleClass();
         return new $qName($inContextRootURL . "/" . $this->getDefaultDispatchScriptName($inUsePHPExtension));
     }
     
+    /**
+     * Register any modules used in Application
+     * 
+     * @see registerModules()
+     *
+     * @param string $inContextRootURL
+     * @param boolean $inActiveModuleClass
+     * @param boolean $inUsePHPExtension
+     *
+     * @return void
+     */
     public function initializeModules($inContextRootURL,$inActiveModuleClass,$inUsePHPExtension) {
         $theModules = $this->registerModules($inContextRootURL,$inUsePHPExtension);
         
@@ -146,26 +207,62 @@ class Application {
         $this->setActiveModule($this->modules[$inActiveModuleClass]);
     }
     
+    /**
+     * Does nothing?
+     *
+     * @param string $inContextRootURL
+     * @param boolean $inUsePHPExtension
+     *
+     * @return void
+     */
     protected function registerModules($inContextRootURL,$inUsePHPExtension) {
         return array();
     }
     
-    /** @return cricket\core\Module */
-    public function getModule($inModuleClass) {
+    /**
+     *
+     * @param string $inModuleClass
+     *
+     * @return Module
+     */    
+     public function getModule($inModuleClass) {
         return $this->modules[$inModuleClass];
     }
     
+    /**
+     * Set the active module
+     * 
+     * @see getActiveModule()
+     *
+     * @param Module $inModule
+     *
+     * @return void
+     */
     public function setActiveModule($inModule) {
         $this->activeModule = $inModule;
     }
     
-    /** @return cricket\core\Module */
+    /**
+     * Returns the active module
+     * 
+     * @see setActiveModule()
+     *
+     * @return Module
+     */
     public function getActiveModule() {
         return $this->activeModule;
     }
     
     
-    // returns array($module,$fullyQualifiedPageClass)
+    /**
+     * Translate Page class to Module and class
+     * 
+     * @see pageClass2ModuleAndClass()
+     *
+     * @param string $inPageClass
+     *
+     * @return array (module, fully qualified page class)
+     */
     protected function pageClass2ModuleAndClass($inPageClass) {
         if($this->activeModule) {
             $theClass = $this->activeModule->resolvePageClass($inPageClass);
@@ -186,33 +283,77 @@ class Application {
         return array(null,null);
     }
     
-    // returns array($module,$pageID)
-    // [TEMP NOTE]  Called from Page to determine its module, and to create the action URL
+    /**
+     * Translate Page class to Module and Page ID
+     * 
+     * @see pageClass2ModuleAndClass()
+     *
+     * @param string $inPageClass
+     *
+     * @return array (module, page_id)
+     */
     public function pageClass2ModuleAndPageID($inPageClass) {
         list($module,$theClass) = $this->pageClass2ModuleAndClass($inPageClass);
         if($theClass) {
-            return array($module,$module->getPageIDFromPageClassName($theClass));
+        	$pageID = Translator::getPageIDFromPageClassName($inPageClass, $this->getPageClassPrefix(), $this->getPageSearchPaths());
+            return array($module,$pageID);
         }
         
         return array(null,null);
     }
     
     
-    // THESE THREE SESSION FUNCTIONS PROVIDE APPLICATION GLOBAL NAMESPACE FOR SESSION ATTRIBUTES.
-    // SIMPLE PREFIX IS USED.
-    
+    /**
+     * Retrieve a session variable
+     *
+     * @see Application::setSessionAttribute()
+     * @see Application::clearSessionAttribute()
+     *
+     * @param RequestContext $inReq
+     * @param string $inName
+     *
+     * @return mixed
+     */
     public function getSessionAttribute(RequestContext $inReq,$inName) {
         return $inReq->getSessionAttribute("APP_{$inName}");
     }
     
+    /**
+     * Set a session variable
+     *
+     * @see Application::getSessionAttribute()
+     * @see Application::clearSessionAttribute() 
+     * 
+     * @param RequestContext $inReq
+     * @param string $inName
+     * @param mixex $inValue
+     * 
+     * @return void
+     */
     public function setSessionAttribute(RequestContext $inReq,$inName,$inValue) {
         $inReq->setSessionAttribute("APP_{$inName}", $inValue);
     }
     
+    /**
+     * Clear a session variable
+     *
+     * @see Application::getSessionAttribute()
+     * @see Application::clearSessionAttribute() 
+     *
+     * @param RequestContext $inReq
+     * @param string $inName 
+     *
+     * @return void
+     */
     public function clearSessionAttribute(RequestContext $inReq,$inName) {
         $inReq->clearSessionAttribute("APP_{$inName}");
     }
     
+    /**
+     * Start session, or if already started, increment $sSessionCount
+     *
+     * @return void
+     */
     public function ensureSession() {
     	if (!$this->isMutable()) {
     		if (self::$sSessionCount == 0 && !self::$sSessionStarted)
@@ -225,6 +366,11 @@ class Application {
     	}
     }
     
+    /**
+     * Attempt to close the session.  Reduce $sSessionCount.  Close if 0
+     *
+     * @return void
+     */
     public function attemptSessionClose() {
     	if (!$this->isMutable()) {
     		self::$sSessionCount -= 1;
@@ -233,6 +379,11 @@ class Application {
     	}
     }
     
+    /**
+     * Start the session
+     *
+     * @return void
+     */
     public function startSession() {
         if($this->config[self::CONFIG_SESSION] == self::PHP_SESSION){
             self::$sSessionStarted = true;
@@ -253,6 +404,11 @@ class Application {
         }
     }
     
+    /**
+     * Close the session, if started
+     *
+     * @return void
+     */
     public function closeSession() {
         if(self::$sSessionStarted) {
             if($this->config[self::CONFIG_SESSION] == self::PHP_SESSION) {
@@ -261,20 +417,40 @@ class Application {
         }
     }
     
+    /**
+     * Mark to killSessionOnExit
+     *
+     * @return void
+     */
     public function destroySessionOnExit() {
         $this->killSessionOnExit = true;
     }
     
+    /**
+     * Sets killSessionOnExit to false
+     *
+     * @return void
+     */
     public function enterApplication() {
         $this->killSessionOnExit = false;
     }
     
+    /**
+     * Destroy session if set to kill session on exit
+     *
+     * @return void
+     */
     public function exitApplication() {
         if($this->killSessionOnExit) {
             $this->destroySessionNow();
         }
     }
     
+    /**
+     * Destroy session
+     *
+     * @return void
+     */
     public function destroySessionNow() {
     	if (!$this->isMutable()) {
     		if(self::$sSessionCount > 0) {
@@ -291,51 +467,40 @@ class Application {
     	}
     }
     
-    
+    /**
+     * Return value from config
+     * 
+     * @param $inKey string
+     *
+     * @return mixed
+     */
     public function getConfigValue($inKey) {
         return $this->config[$inKey];
     }
     
+    /**
+     * What namespace (folder structure) to find the page classes
+     *
+     * @return array
+     */
     public function getPageSearchPaths() {
         return array("app\\pages");
     }
     
+    /**
+     * Return prefix for Page class names
+     *
+     * @return string
+     */
     public function getPageClassPrefix() {
         return "Page";
     }
-    
-    public function getPageClassNameFromPageID($inPageID) {
-        $parts = explode("/",$inPageID);
-        $last = $parts[count($parts) - 1];
-        $className = $this->getPageClassPrefix() . ucfirst($last);
-        $parts[count($parts) - 1] = $className;
-        return implode("\\",$parts);
-    }
-    
-    // $inPageClassName must be fully qualified class
-    public function getPageIDFromPageClassName($inPageClassName) {        
-        $longest = "";
-        $searchPaths = $this->getPageSearchPaths();
-        foreach($searchPaths as $thisPath) {
-            if(strpos($inPageClassName, $thisPath) === 0) {
-                if(strlen($thisPath) > $longest) {
-                    $longest = $thisPath;
-                }
-            }
-        }
         
-        $fragment = substr($inPageClassName,strlen($longest) + 1);
-        $parts = explode("\\",$fragment);
-        $last = $parts[count($parts) - 1];
-
-        $prefix = $this->getPageClassPrefix();
-        $regex = "/^{$prefix}/";
-        $last = preg_replace($regex,'',$last);
-        $parts[count($parts) - 1] = strtolower($last);
-        
-        return implode("/",$parts);
-    }
-    
+    /**
+     * Return the session id as the unique page id
+     *
+     * @return string
+     */
     public function getUniqueId() {
     	$this->ensureSession();
     	$unique_id = session_id();
@@ -343,16 +508,41 @@ class Application {
     	return $unique_id;
     }
   
-    /** @return Page */
+    /**
+     * Retrieve the page from storage
+     * 
+     * @see savePageToStorage()
+     *
+     * @param string $inInstanceID
+     * @param string $inPageVersion
+     *
+     * @return Page
+     */    
     public function loadPageFromStorage($inInstanceID,$inPageVersion) {
         return $this->getPageStoreHandler()->load($this->getUniqueId(),$inInstanceID,$inPageVersion);
     }
     
+    /**
+     * Save the page to storage 
+     *
+     * @see loadPageFromStorage()
+     * 
+     * @param Page $inPage
+     * @param string $inSaveAsInstanceId
+     *
+     * @return void
+     */
     public function savePageToStorage(Page $inPage,$inSaveAsInstanceID = null) {
         $this->getPageStoreHandler()->save($this->getUniqueId(),$inPage,$inSaveAsInstanceID);
     }
     
-    /** @return PageStoreHandler */
+    /**
+     * Return the page store handler
+     * 
+     * @throws Exception
+     *
+     * @return PageStoreHandler
+     */
     public function getPageStoreHandler() {
         if(!$this->pageStoreHandler) {
             $appID = $this->config[self::CONFIG_APP_ID];
@@ -368,7 +558,12 @@ class Application {
         return $this->pageStoreHandler;
     }
     
-    // Override this method
+    /**
+     *
+     * @param string $appID
+     *
+     * @return FSPageStoreHandler
+     */
     protected function createPageStoreHandler($appID) {
         $storePath = \sys_get_temp_dir() . "/cricket_page_store/$appID";
         return new FSPageStoreHandler($storePath);

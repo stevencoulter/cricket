@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>     &raquo; Markers
+</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/cricket.html">\cricket</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">484</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">15</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+            <ul class="side-nav nav nav-list">
+                <li class="nav-header">Navigation</li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li><a href="#utils/Utils.php"><i class="icon-file"></i> utils/Utils.php</a></li>
+                                                                                                                                                                                                                <li><a href="#core/AjaxResponse.php"><i class="icon-file"></i> core/AjaxResponse.php</a></li>
+                                                                                                                                                                                                                                                                                                                                <li><a href="#core/AjaxResponseManager.php"><i class="icon-file"></i> core/AjaxResponseManager.php</a></li>
+                                                                                                <li><a href="#core/CricketContext.php"><i class="icon-file"></i> core/CricketContext.php</a></li>
+                                                                                                <li><a href="#core/Dispatcher.php"><i class="icon-file"></i> core/Dispatcher.php</a></li>
+                                                                                                                                                                                                                <li><a href="#core/Container.php"><i class="icon-file"></i> core/Container.php</a></li>
+                                                                                                                                                                                                                                                                        <li><a href="#core/TemplateInheritanceContext.php"><i class="icon-file"></i> core/TemplateInheritanceContext.php</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                        <li><a href="#components/Table.php"><i class="icon-file"></i> components/Table.php</a></li>
+                                                                                                <li><a href="#entry.php"><i class="icon-file"></i> entry.php</a></li>
+                                                                                                                                                        <li><a href="#core/RequestContext.php"><i class="icon-file"></i> core/RequestContext.php</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </ul>
+        </div>
+
+        <div class="span10 offset2">
+
+            <ul class="breadcrumb">
+                <li><a href="../"><i class="icon-map-marker"></i></a><span class="divider">\</span></li>
+                <li>Markers</li>
+            </ul>
+
+            
+            <div id="marker-accordion">
+                                                                                                                                                                                                                                                                                                                                                                                                <div class="package-contents">
+                            <a name="utils/Utils.php" id="utils/Utils.php"></a>
+                            <h3>
+                            <i class="icon-file"></i>
+                                utils/Utils.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                                                            <tr>
+                                            <td>TODO</td>
+                                            <td>38</td>
+                                            <td>Should not be U.S. centric</td>
+                                        </tr>
+                                                                    </table>
+                            </div>
+                        </div>
+                                                                                                                                                        <div class="package-contents">
+                            <a name="core/AjaxResponse.php" id="core/AjaxResponse.php"></a>
+                            <h3>
+                            <i class="icon-file"></i>
+                                core/AjaxResponse.php
+                                <small style="float: right;padding-right: 10px;">2</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                                                            <tr>
+                                            <td>TODO</td>
+                                            <td>39</td>
+                                            <td>Add support for component based preserved scrolling</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td>TODO</td>
+                                            <td>39</td>
+                                            <td>Allow component to contribute to jQuery selector for div to preserve</td>
+                                        </tr>
+                                                                    </table>
+                            </div>
+                        </div>
+                                                                                                                                                                                                                                <div class="package-contents">
+                            <a name="core/AjaxResponseManager.php" id="core/AjaxResponseManager.php"></a>
+                            <h3>
+                            <i class="icon-file"></i>
+                                core/AjaxResponseManager.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                                                            <tr>
+                                            <td>TODO</td>
+                                            <td>65</td>
+                                            <td>deal with removing, etc</td>
+                                        </tr>
+                                                                    </table>
+                            </div>
+                        </div>
+                                                                                <div class="package-contents">
+                            <a name="core/CricketContext.php" id="core/CricketContext.php"></a>
+                            <h3>
+                            <i class="icon-file"></i>
+                                core/CricketContext.php
+                                <small style="float: right;padding-right: 10px;">3</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                                                            <tr>
+                                            <td>TODO</td>
+                                            <td>558</td>
+                                            <td>Currently &quot;$inFormSelector&quot; is interpretted as an &quot;ID&quot;.   This is unfortunate.  It really should be a jQuery selector.</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td>TODO</td>
+                                            <td>615</td>
+                                            <td>Fix quoting implementation and remove this method</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td>TODO</td>
+                                            <td>630</td>
+                                            <td>replace with htmlentities or Utils::escape</td>
+                                        </tr>
+                                                                    </table>
+                            </div>
+                        </div>
+                                                                                <div class="package-contents">
+                            <a name="core/Dispatcher.php" id="core/Dispatcher.php"></a>
+                            <h3>
+                            <i class="icon-file"></i>
+                                core/Dispatcher.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                                                            <tr>
+                                            <td>TODO</td>
+                                            <td>313</td>
+                                            <td>This shouldn&#039;t be here, but I need to make sure that there is a session before output starts so that I can get </td>
+                                        </tr>
+                                                                    </table>
+                            </div>
+                        </div>
+                                                                                                                                                        <div class="package-contents">
+                            <a name="core/Container.php" id="core/Container.php"></a>
+                            <h3>
+                            <i class="icon-file"></i>
+                                core/Container.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                                                            <tr>
+                                            <td>TODO</td>
+                                            <td>54</td>
+                                            <td>Not yet implemented</td>
+                                        </tr>
+                                                                    </table>
+                            </div>
+                        </div>
+                                                                                                                                                                                            <div class="package-contents">
+                            <a name="core/TemplateInheritanceContext.php" id="core/TemplateInheritanceContext.php"></a>
+                            <h3>
+                            <i class="icon-file"></i>
+                                core/TemplateInheritanceContext.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                                                            <tr>
+                                            <td>TODO</td>
+                                            <td>82</td>
+                                            <td>There was a release in svn cricket that needs updated here</td>
+                                        </tr>
+                                                                    </table>
+                            </div>
+                        </div>
+                                                                                                                                                                                                                                                                    <div class="package-contents">
+                            <a name="components/Table.php" id="components/Table.php"></a>
+                            <h3>
+                            <i class="icon-file"></i>
+                                components/Table.php
+                                <small style="float: right;padding-right: 10px;">2</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                                                            <tr>
+                                            <td>TODO</td>
+                                            <td>24</td>
+                                            <td>Add complete support for built in selection</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td>TODO</td>
+                                            <td>25</td>
+                                            <td>Add multi level sort support</td>
+                                        </tr>
+                                                                    </table>
+                            </div>
+                        </div>
+                                                                                <div class="package-contents">
+                            <a name="entry.php" id="entry.php"></a>
+                            <h3>
+                            <i class="icon-file"></i>
+                                entry.php
+                                <small style="float: right;padding-right: 10px;">1</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                                                            <tr>
+                                            <td>TODO</td>
+                                            <td>30</td>
+                                            <td>These should not be set in here</td>
+                                        </tr>
+                                                                    </table>
+                            </div>
+                        </div>
+                                                                                                                    <div class="package-contents">
+                            <a name="core/RequestContext.php" id="core/RequestContext.php"></a>
+                            <h3>
+                            <i class="icon-file"></i>
+                                core/RequestContext.php
+                                <small style="float: right;padding-right: 10px;">2</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                                                            <tr>
+                                            <td>TODO</td>
+                                            <td>67</td>
+                                            <td>Not yet implemented?</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td>TODO</td>
+                                            <td>133</td>
+                                            <td>This may be too apache specific</td>
+                                        </tr>
+                                                                    </table>
+                            </div>
+                        </div>
+                                                                                                                                                                                                                                                                                                            </div>
+        </div>
+    </section>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/cricket.html">\cricket</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on October 28th, 2014 at 14:22.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

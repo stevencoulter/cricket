@@ -23,6 +23,10 @@ namespace cricket\components;
 
 use cricket\core\Component;
 
+/**
+ * A simple component to render an iFrame given a url
+ *
+ */
 class Iframe extends Component {
     
     public $attributes = array();

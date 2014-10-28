@@ -23,6 +23,13 @@ namespace cricket\components;
 
 // TODO:  Add complete support for built in selection
 // TODO:  Add multi level sort support
+
+/**
+ * A class to display tabular data
+ * 
+ * Built in support for paging and sorting
+ *
+ */
 abstract class Table extends \cricket\core\Component {
     
     /** @var Table_Sort */

@@ -23,11 +23,20 @@ namespace cricket\core;
 
 use cricket\utils\Utils;
 
+/**
+ * Context object.  This class forms $cricket in the template files.
+ *
+ */
 class CricketContext {
 
     //////////////////////////////////////////
     // header contribution
     
+	/**
+	 * Return contirbutions to the head
+	 * 
+	 * @return string
+	 */
     public function head() {
         $result = $this->page->getHeadContributions();
         return $result;
@@ -37,6 +46,13 @@ class CricketContext {
     //////////////////////////////////////////
     // component rendering
     
+    /**
+     * Template placeholder for the component's content
+     * 
+     * @param string $inID
+     * 
+     * @return void
+     */
     public function component($inID) {
         if($this->component !== null) {
             $inID = $this->component->resolveChildID($inID);
@@ -45,6 +61,15 @@ class CricketContext {
         $this->page->renderComponent($inID);
     }
     
+    /**
+     * Template placeholder for static component
+     * 
+     * @param string $inStaticID
+     * @param string $inRenderID
+     * @param mixed $inData
+     * 
+     * @return void
+     */
     public function static_component($inStaticID,$inRenderID,$inData) {
         if($this->component !== null) {
             $inID = $this->component->resolveChildID($inStaticID);
@@ -53,11 +78,25 @@ class CricketContext {
         $this->page->renderStaticComponent($inID,$inRenderID,$inData);
     }
     
-    // return unique id based on component prefix
+	/**
+	 * Return conponent's unique ID
+	 * 
+	 * @param string $inSuffix
+	 * 
+	 * @return string
+	 */
     public function componentID($inSuffix) {
         return $this->getComponent()->getId() . $inSuffix;
     }
 
+    /**
+     * Render an indicator used in call actions
+     * 
+     * @param string $inID
+     * @param string $extraStyles
+     * 
+     * @return string
+     */
     public function indicator($inID,$extraStyles="") {
         $imagePath = $this->resource_url("cricket/img/indicator.gif");
         return "<img src=\"$imagePath\" border=\"0\" id=\"$inID\" style=\"visibility:hidden;$extraStyles\">";
@@ -66,15 +105,36 @@ class CricketContext {
     
     ////////////////////////////////////
     //  URL generation
-    
+    /**
+     * Genreate a Page class URL
+     * 
+     * @param string $pageClass
+     * @param string $actionID
+     * 
+     * @return URL
+     */
     public function page_url($pageClass = null,$actionID = null) {
         return $this->page->getActionUrl($actionID, $pageClass);
     }
     
+    /**
+     * Generate a Component class action URL
+     * 
+     * @param string $actionID
+     * 
+     * @return URL
+     */
     public function component_url($actionID) {
         return $this->component->getActionUrl($actionID);
     }
     
+    /**
+     * Genreate a resource URL
+     * 
+     * @param string $inPath
+     * 
+     * @return string
+     */
     public function resource_url($inPath) {
         $result = null;
         
@@ -95,15 +155,49 @@ class CricketContext {
     ////////////////////////////////////
     //  javascript clicks and links
     
+    /**
+     * Create an onclick handler for a component action
+     * 
+     * @param string $inActionID
+     * @param string $inData
+     * @param string $indicatorID
+     * @param string $confirmation
+     * @param string $requestChannel
+     * 
+     * @return string
+     */
     public function onclick($inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
         return Utils::escape_html($this->call_action($inActionID,$inData,$indicatorID,$confirmation,$requestChannel));
     }
     
-    
+    /**
+     * Create a href action call, prepended with 'javascript:' 
+     * 
+     * @param string $inActionID
+     * @param string $inData
+     * @param string $indicatorID
+     * @param string $confirmation
+     * @param string $requestChannel
+     * 
+     * @return string
+     */
     public function href($inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
         return "javascript:" . $this->onclick($inActionID,$inData,$indicatorID,$confirmation,$requestChannel);
     }
     
+    /**
+     * Create a javascript setInterval function to call an action after a specified time
+     * 
+     * @param integer $interval
+     * @param integer $repeat
+     * @param string $inActionID
+     * @param string $inData
+     * @param string $indicatorID
+     * @param string $confirmation
+     * @param string $requestChannel
+     * 
+     * @return string
+     */
     public function timer($interval,$repeat,$inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
         $call = $this->call_action($inActionID, $inData, $indicatorID, $confirmation, $requestChannel);
         if($repeat) {
@@ -113,7 +207,18 @@ class CricketContext {
         }
     }
     
-    
+    /**
+     * Internal function use to create the javascript
+     * 
+     * @param string $inActionID
+     * @param string $inData
+     * @param string $indicatorID
+     * @param string $confirmation
+     * @param string $requestChannel
+     * @param string $inMutable
+     * 
+     * @return string
+     */
     public function call_action($inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null, $inMutable = true) {
         if($inData !== null) {
             if(is_array($inData)) {
@@ -137,16 +242,48 @@ class CricketContext {
     ////////////////////////////////////
     // form submits
     
+    /**
+     * Form action caller
+     * 
+     * @param string $inFormSelector
+     * @param string $inActionID
+     * @param string $inIndicatorID
+     * @param string $inConfirmation
+     * @param string $requestChannel
+     * 
+     * @return string cricket_ajax_form
+     */
     public function action($inFormSelector,$inActionID,$inIndicatorID = null,$inConfirmation = null,$requestChannel = null) {
         $js = $this->call_form_action("jQuery('{$inFormSelector}').get()[0]", $inActionID, $inIndicatorID, $inConfirmation, $requestChannel);
         return "javascript:" . Utils::escape_html($js);
     }
     
+    /**
+     * Form submit action
+     * 
+     * @param string $inActionID
+     * @param string $inIndicatorID
+     * @param string $inConfirmation
+     * @param string $requestChannel
+     * 
+     * @return string cricket_ajax_form
+     */
     public function submit($inActionID,$inIndicatorID = null,$inConfirmation = null,$requestChannel = null) {
         $js = $this->call_form_action("this", $inActionID, $inIndicatorID, $inConfirmation, $requestChannel);
         return Utils::escape_html($js);
     }
     
+    /**
+     * Internal function to construct form action javascript
+     * 
+     * @param string $inJSFormReference
+     * @param string $inActionID
+     * @param string $inIndicatorID
+     * @param string $inConfirmation
+     * @param string $requestChannel
+     * 
+     * @return string cricket_ajax_form
+     */
     public function call_form_action($inJSFormReference,$inActionID,$inIndicatorID = null,$inConfirmation = null,$requestChannel = null) {   
         
         $url = $this->component->getActionUrl($inActionID);
@@ -163,17 +300,29 @@ class CricketContext {
     //////////////////////////////////////////
     // accessors
     
-    /** @return Page */
+    /**
+     *  Return the Page
+     *  
+     *  @return Page
+     * /
     public function getPage() {
         return $this->page;
     }
     
-    /** @return Container */
+    /** 
+     * Return the Container
+     * 
+     * @return Container 
+     */
     public function getComponent() {
         return $this->component;
     }
 
-    /** @return RequestContext */
+    /** 
+     * Return the request context
+     * 
+     * @return RequestContext
+     */
     public function getRequest() {
         return $this->req;
     }
@@ -183,7 +332,14 @@ class CricketContext {
     // templating
     
     
-    // template inheritance method
+    /**
+     * Template inherentence method
+     * 
+     * @param string $inPath
+     * @param array $additionalParams
+     * 
+     * @return void
+     */
     public function tpl_include($inPath,$additionalParams = array()) {
         $fullPath = $this->resolveTemplatePath($inPath);
         if($fullPath !== null) {
@@ -215,21 +371,48 @@ class CricketContext {
     public $req;
     
     
+    /**
+     * Construct the Context object
+     * 
+     * @param RequestContext $inReq
+     * 
+     * @return void
+     */
     public function __construct(RequestContext $inReq) {
         $this->req = $inReq;
     }
     
+    /**
+     * Set the Page
+     * 
+     * @param Page $page
+     * 
+     * @return void
+     */
     public function setPage(Page $page) {
         $this->page = $page;
         $this->component = null;
     }
     
-    
+    /**
+     * Set the Component
+     * 
+     * @param Component $c
+     * 
+     * @return void
+     */
     public function setComponent($c) {
         $this->component = $c;
     }
     
     
+    /**
+     * Resolve a template's path
+     * 
+     * @param string $inPath
+     * 
+     * @return string Full template path
+     */
     public function resolveTemplatePath($inPath) {
         $fullPath = null;
         $a = array();
@@ -245,62 +428,133 @@ class CricketContext {
     ////////////////////////////////////////////
     // DEPRECATED
     
-    // TODO:  I'm 98% sure this isnt needed any more since cricket now always embeds the instance ID into the URL
+	/**
+	 * No longer needed -- instance id embded into url
+	 * 
+	 * @return string
+	 */
     public function form_instance_id() {
         return "<input type='hidden' name='_CRICKET_PAGE_INSTANCE_' value='" . $this->page->getInstanceID() . "'>";
     }
     
             
-    // TODO:  I'm 98% sure this isnt needed any more since cricket now always embeds the instance ID into the URL
+    /**
+     * No longer needed -- instance ID embdeed into url
+     * 
+     * @param unknown $inURL
+     * 
+     * @return string
+     */
     public function addInstanceIDToURL($inURL) {
         $result = new \cricket\utils\URL($inURL);
         $result->setQueryParameter(Dispatcher::INSTANCE_ID, $this->getPage()->getInstanceID());
         return $result->toString();
     }
     
+    /**
+     * Alternative for href
+     * 
+     * @param string $inActionID
+     * @param string $inDataString
+     * @param string $indicatorID
+     * @param string $confirmation
+     * @param string $requestChannel
+     * 
+     * @return string
+     */
     public function call_href($inActionID,$inDataString = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
-        return "javascript:" . $this->escapeAttr($this->call($inActionID,$inDataString,$indicatorID,$confirmation,$requestChannel));
+    	return $this->href($inActionID,$inData,$indicatorID,$confirmation,$requestChannel);
     }
     
-    
-    
+    /**
+     * Alternative for timer
+     * 
+     * @param integer $interval
+     * @param integer $repeat
+     * @param string $inActionID
+     * @param string $inDataString
+     * @param string $indicatorID
+     * @param string $confirmation
+     * @param string $requestChannel
+     * 
+     * @return string
+     */
     public function call_timer($interval,$repeat,$inActionID,$inDataString = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
-        if($inDataString !== null) {
-            if(is_array($inDataString)) {
-                $inDataString = json_encode($inDataString);
-            }
-        }
-        
-        $url = $this->component->getActionUrl($inActionID);
-        $data = $inDataString === null ? "{}" : $inDataString;
-        $iID = $indicatorID === null ? "null" : "\'$indicatorID\'";
-        $conf = $confirmation === null ? "null" : "\'$confirmation\'";
-        $channel = $requestChannel === null ? "null" : "\'$requestChannel\'";
-        if ($repeat) {
-            return "setInterval('cricket_ajax(\'$url\',$data,$iID,$conf,$channel)',$interval);";
-        } else {
-            return "setTimeout('cricket_ajax(\'$url\',$data,$iID,$conf,$channel)',$interval);";
-        }
+    	return $this->timer($interval, $repeat, $inActionID, $inDataString, $indicatorID, $confirmation, $requestChannel);
     }
     
+    /**
+     * Alternative for call_action
+     * 
+     * @param string $inActionID
+     * @param string $inData
+     * @param string $indicatorID
+     * @param string $confirmation
+     * @param string $requestChannel
+     * 
+     * @return string
+     */
     public function call($inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
         return $this->call_action($inActionID, $inData, $indicatorID, $confirmation, $requestChannel);
     }
 
+    /**
+     * Asycnronous action call
+     * 
+     * @param string $inActionID
+     * @param string $inData
+     * @param string $indicatorID
+     * @param string $confirmation
+     * @param string $requestChannel
+     * 
+     * @return string
+     */
     public function call_async($inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
     	return $this->call_action($inActionID, $inData, $indicatorID, $confirmation, $requestChannel, false);
     }
     
+    /**
+     * Call with escaped attribute
+     * 
+     * @param string $inActionID
+     * @param string $inDataString
+     * @param string $indicatorID
+     * @param string $confirmation
+     * @param string $requestChannel
+     * 
+     * @return string
+     */
     public function call_attr($inActionID,$inDataString = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
         return $this->escapeAttr($this->call($inActionID,$inDataString,$indicatorID,$confirmation,$requestChannel));
     }
     
+    /**
+     * Unsafely call attribute, for malformed quotes
+     * 
+     * @param string $inActionID
+     * @param string $inDataString
+     * @param string $indicatorID
+     * @param string $confirmation
+     * @param string $requestChannel
+     * 
+     * @return string
+     */
     public function call_attr_unsafe($inActionID,$inDataString = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
         return $this->escapeAttrUnsafe($this->call($inActionID,$inDataString,$indicatorID,$confirmation,$requestChannel));
     }
     
-    // use this on a form "action" attribute
-    // TODO:  Currently "$inFormSelector" is interpretted as an "ID".   This is unfortunate.  It really should be a jQuery selector.
+    /**
+     * Use on a form action
+     * 
+     * @todo Currently "$inFormSelector" is interpretted as an "ID".   This is unfortunate.  It really should be a jQuery selector.
+     * @param string $inActionID
+     * @param string $inFormSelector
+     * @param string $inIndicatorID
+     * @param string $inConfirmation
+     * @param string $requestChannel
+     * 
+     * @return string
+     */
     public function form_action($inActionID,$inFormSelector,$inIndicatorID = null,$inConfirmation = null,$requestChannel = null) {
         $url = $this->component->getActionUrl($inActionID);
         $ind = $inIndicatorID === null ? "null" : "&#39;$inIndicatorID&#39;";
@@ -309,10 +563,18 @@ class CricketContext {
         return "javascript:cricket_ajax_form(jQuery(&#39;#$inFormSelector&#39;).get()[0],&#39;$url&#39;,$ind,$confirm,$channel);";
     }
     
-    
-    
-    
-    // use this on a button's onclick to submit the parent form
+    /**
+     * Use a a button's onclick to submit its parent form
+     * 
+     * @param string $inActionID
+     * @param string $inIndicatorID
+     * @param string $inConfirmation
+     * @param string $inFormID
+     * @param string $requestChannel
+     * @param boolean $failSilent
+     * 
+     * @return string
+     */
     public function form_submit($inActionID,$inIndicatorID = null, $inConfirmation = null,$inFormID = null,$requestChannel = null,$failSilent = false) {
         $form = "this";
         if($inFormID) {
@@ -327,24 +589,44 @@ class CricketContext {
         return "cricket_ajax_form($form,'$url',$ind,$confirm,$channel,$failSilent);";
     }
     
+    /**
+     * Form submit attr escaped
+     * 
+     * @param string $inActionID
+     * @param string $inIndicatorID
+     * @param string $inConfirmation
+     * @param string $requestChannel
+     * 
+     * @return string
+     */
     public function form_submit_attr($inActionID,$inIndicatorID = null, $inConfirmation = null,$requestChannel = null) {
         $result = $this->form_submit($inActionID,$inIndicatorID,$inConfirmation,$requestChannel);
         return $this->escapeAttr($result);
     }
-    
-    
 
-    
-    // TODO:  I think this is here because of the poor quoting implementation on the "call" methods
-    // if thats the reason, then after thats fixed, this can be removed.
-    
+    /**
+     * Unsafely excape attribute due to malformed quotes
+     * 
+     * @todo Fix quoting implementation and remove this method
+     * 
+     * @param unknown $inValue
+     * @return mixed
+     */
     public function escapeAttrUnsafe($inValue) {
     	$result = str_replace('&apos;',"'",$this->escapeAttr($inValue));
     	$result = str_replace('&quot;','"',$result);
     	return $result;
     }
     
-    // TODO:  shoulde we use htmlentities, or Utils::escape?
+    /**
+     * Remove certain values from value
+     * 
+     * @todo replace with htmlentities or Utils::escape
+     * 
+     * @param unknown $inValue
+     * 
+     * @return string excaped string
+     */
     public function escapeAttr($inValue) {
         $result = str_replace('&','&amp;',$inValue);
         $result = str_replace('"','&#34;',$result);
@@ -353,18 +635,23 @@ class CricketContext {
         $result = str_replace('>','&gt;',$result);
         return $result;
     }
-    
-    
 
-    
-    // control def
-    //      type: link | button | submit
-    //      action: "action"
-    //      label: "label"
-    //      param: null | array | js-string     <-- used for link and button
-    //      ind:   null | indicator id          <-- if null uses supplied indicator
-    //      confirm: null | string
-    
+    /**
+     * I'm not sure what this does ;)
+     * 
+     * type: link | button | submit
+     * action: "action"
+     * label: "label"
+     * param: null | array | js-string       used for link and button
+     * ind: null | indicator id
+     * confirm: null | string
+     * 
+     * @param unknown $genIndicatorID
+     * @param unknown $indicatorFirst
+     * @param array $controlDefs
+     * 
+     * @return void
+     */
     public function control_group($genIndicatorID,$indicatorFirst,array $controlDefs) {
         global $INLINE;
         
@@ -403,7 +690,20 @@ class CricketContext {
             echo $this->indicator($indID,'vertical-align:top;');
         }
     }
-    
+
+    /**
+     * Action link for control group
+     * 
+     * @see control_group()
+     * 
+     * @param string $action
+     * @param string $label
+     * @param string $params
+     * @param string $genIndicatorID
+     * @param string $inConfirmation
+     * 
+     * @return void
+     */
     public function action_link($action,$label,$params=null,$genIndicatorID=null,$inConfirmation = null) {
         $this->control_group($genIndicatorID,false,array(
             array(
@@ -416,6 +716,20 @@ class CricketContext {
         ));
     }
     
+    /**
+     * Action button for control group
+     * 
+     * @see control_group()
+     * 
+     * @param string $action
+     * @param string $label
+     * @param string $params
+     * @param string $genIndicatorID
+     * @param boolean $indicatorFirst
+     * @param string $confirmation
+     * 
+     * @return void
+     */
     public function action_button($action,$label,$params = null,$genIndicatorID=null,$indicatorFirst=true,$confirmation=null) {
         $this->control_group($genIndicatorID,$indicatorFirst,array(
             array(
@@ -428,6 +742,17 @@ class CricketContext {
         ));
     }
     
+    /**
+     * Submit action for control group
+     * 
+     * @param string $action
+     * @param string $label
+     * @param string $genIndicatorID
+     * @param boolean $indicatorFirst
+     * @param string $confirmation
+     * 
+     * @return void
+     */
     public function action_submit($action,$label,$genIndicatorID=null,$indicatorFirst=true,$confirmation=null) {
         $this->control_group($genIndicatorID,$indicatorFirst,array(
             array(
@@ -439,6 +764,18 @@ class CricketContext {
         ));
     }
     
+    /**
+     * OK / Cancel action for control group
+     * 
+     * @param string $okAction
+     * @param string $okLabel
+     * @param string $okForm
+     * @param string $okNotFormParams
+     * @param string $okConfirm
+     * @param string $cancelAction
+     * @param string $cancelLabel
+     * @param string $indicatorFirst
+     */
     public function action_ok_cancel($okAction,$okLabel,$okForm = true,$okNotFormParams = null,$okConfirm = null,$cancelAction='close',$cancelLabel = "Cancel",$indicatorFirst = true) {
         $this->control_group("ind_ok_cancel",$indicatorFirst,array(
             array(

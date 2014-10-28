@@ -20,7 +20,12 @@
 
 namespace cricket\components;
 
-
+/**
+ * The button for ConfirmationDialog
+ * 
+ * @see ConfirmationDialog
+ *
+ */
 class ConfirmationButton {
     public $label;
     public $message;
@@ -33,7 +38,10 @@ class ConfirmationButton {
     }
 }
 
-
+/**
+ * A simple confirmation dialog box
+ *
+ */
 class ConfirmationDialog extends ModalComponent {
     const MESSAGE_OK = "ConfirmationDialog.CONFIRM_OK";
     const MESSAGE_CANCEL = "ConfirmationDialog.CONFIRM_CANCEL";

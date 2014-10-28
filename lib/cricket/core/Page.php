@@ -21,6 +21,12 @@
 
 namespace cricket\core;
 
+use cricket\utils\Translator;
+
+/**
+ * Page class
+ *
+ */
 
 abstract class Page extends Container {
     const   MODE_STATELESS = 'stateless';
@@ -54,6 +60,11 @@ abstract class Page extends Container {
         parent::__construct(null);
     }
 
+    /**
+     * If not loaded, load.  Otherwise, pull from cache _loaded
+     * 
+     * @return void
+     */
     public function load() {
         if(!$this->_loaded) {
             $this->_loaded = true;
@@ -62,64 +73,130 @@ abstract class Page extends Container {
         }
     }
     
-    
+    /**
+     * Overridden in subclasses to add components
+     * 
+     * @return void
+     */
     protected function init() {
         
     }
     
+    /**
+     * Render
+     * 
+     * @return void
+     */
     abstract public function render();
     
+    /**
+     * Determine if the page is stated
+     * 
+     * @return boolean
+     */
     public function hasState() {
         $class = get_class($this);
         return $class::$SESSION_MODE != self::MODE_STATELESS;
     }
     
-    /** @return RequestContext */
+    /**
+     * Return the RequestContext
+     *  
+     * @return RequestContext 
+     */
     public function getRequest() {
         return $this->_request;
     }
     
-    /** @return ResponseContext */
+    /**
+     *  Return the RepsonseContext
+     *  
+     *  @return ResponseContext 
+     */
     public function getResponse() {
         return $this->_response;
     }
     
-    
+    /**
+     * Set the Page's AjaxResponseManager
+     * 
+     * @see getAjaxManager()
+     * 
+     * @param AjaxResponseManager $aj
+     * 
+     * @return void
+     */
     public function setAjaxManager(AjaxResponseManager $aj) {
         $this->_ajax = $aj;
     }
     
-    /** @return AjaxResponseManager */
+    /**
+     *  Get the Page's AjaxResponseManager
+     *  
+     *  @see setAjaxManager()
+     *  
+     *  @return AjaxResponseManager 
+     */
     public function getAjaxManager() {
         return $this->_ajax;
     }
     
+    /**
+     * Determine if call is AJAX
+     * 
+     * @return boolean
+     */
     public function isAjax() {
         return $this->_ajax !== null;
     }
     
+    /**
+     * Begin the request
+     * 
+     * @param RequestContext $req
+     * @param ResponseContext $resp
+     * 
+     * @return void
+     */
     public function beginRequest(RequestContext $req,ResponseContext $resp) {
         $this->_request = $req;
         $this->_response = $resp;
     }
     
-    // not sure that this is really needed since these fields are transient
+    /**
+     * Terminate the request by nullifying request and response
+     * 
+     * @return void
+     */
     public function endRequest() {
         $this->_request = null;
         $this->_response = null;
         $this->_ajax = null;
     }
     
+    /**
+     * Post to Render
+     * 
+     * @return void
+     */
     public function post() {
         $this->render();
     }
     
+    /**
+     * Return the Page's instance ID
+     * 
+     * @return string
+     */
     public function getInstanceID() {
         return $this->_instanceID;
     }
     
-    // TODO: Consider allowing compoment to contribute a css class to the wrapper div
-    
+	/**
+	 * Cause a component to render
+	 * 
+	 * @param string $inID Component ID
+	 */    
     public function renderComponent($inID) {
         /* @var $c Component */
         $c = $this->findComponent($inID);
@@ -139,7 +216,15 @@ abstract class Page extends Container {
         }
     }
     
-    
+    /**
+     * Cause a static component to render
+     * 
+     * @param string $inID Component ID
+     * @param string $inRenderID Component'd div ID
+     * @param mixed $inData
+     * 
+     * @return void
+     */
     public function renderStaticComponent($inID,$inRenderID,$inData) {
         /* @var $c StaticComponent */
         $c = $this->findComponent($inID);
@@ -160,24 +245,20 @@ abstract class Page extends Container {
         }
     }
     
-    // returns the "leaf name" of the class "PageOne" for app\pages\PageOne
+	/**
+	 * Returns leaf name of Page class
+	 * 
+	 * @return string
+	 */
     public function getPageClassName() {
-        $pageSearchPaths = $this->getModule()->getPageSearchPaths();
-        $thisClass = get_class($this);
-        
-        $longestMatch = "";
-        foreach($pageSearchPaths as $thisPath) {
-            if(strpos($thisClass,$thisPath) === 0) {
-                if(strlen($thisPath) > strlen($longestMatch)) {
-                    $longestMatch = $thisPath;
-                }
-            }
-        }
-        
-        return substr($thisClass, strlen($longestMatch)+1);
+    	return Translator::getPageClassName($this, $this->getModule()->getPageSearchPaths());
     }
     
-    /** @return cricket\core\Module */
+    /**
+     * Returns the module
+     *  
+     * @return cricket\core\Module 
+     */
     public function getModule() {
         if(!isset($this->_module)) {
             list($module,$class) = Application::getInstance()->pageClass2ModuleAndPageID(get_class($this));
@@ -187,7 +268,13 @@ abstract class Page extends Container {
         return $this->_module;
     }
 
-    // $inActionID can be null for page.  $inPageClassName = null for *this* page
+	/**
+	 * Create an action URL
+	 * 
+	 * @see \cricket\core\Container::getActionUrl($inActionID)
+	 * 
+	 * @return URL
+	 */
     public function getActionUrl($inActionID,$inPageClassName = null) {
         $module = null;
         $instanceID = null;
@@ -205,28 +292,63 @@ abstract class Page extends Container {
         return $module->assembleURL($this->getRequest(),$inPageClassName,$inActionID,$instanceID);
     }
     
+    /**
+     * Get the URL of the page class
+     * 
+     * @param string $inPageClassName
+     * 
+     * @return \cricket\core\URL
+     */
     public function getPageUrl($inPageClassName = null) {
         return $this->getActionUrl(null,$inPageClassName);
     }
     
+    /**
+     * Generate an Instance ID for the page
+     * 
+     * @return string
+     */
     public function generateInstanceID() {
         return uniqid(null,true);
     }
     
+    /**
+     * Invalidate a component
+     * 
+     * @see AjaxResponseManager::invalidate()
+     * 
+     * @param Component $aThis
+     * 
+     * @return void
+     */
     public function invalidateComponent(Component $aThis) {
         if($this->_ajax !== null) {
             $this->_ajax->invalidate($aThis);
         }
     }
     
+    /**
+     * Force a component to render
+     * 
+     * @see AjaxResponse::renderNow()
+     * 
+     * @param Component $aThis
+     * 
+     * @return void
+     */
     public function renderComponentNow(Component $aThis) {
         if($this->_ajax !== null) {
             $this->_ajax->renderNow($aThis);
         } 
     }
-    
 	
-	
+    /**
+     * Add the Page's contributions to the head
+     * 
+     * @param Page $page
+     * 
+     * @return string
+     */
     static public function contributeToHead($page) {
         $cricketJS = Container::resolveResourceUrl($page, get_class($page), "cricket/js/cricket.js");
         $pageID = $page->getInstanceID();
@@ -238,7 +360,11 @@ abstract class Page extends Container {
 END;
     }
     
-    
+    /**
+     * Get the Page's Component's contributions to the head
+     * 
+     * @return string
+     */
     public function getHeadContributions() {
         $added = array();
         $results = array();
@@ -248,7 +374,15 @@ END;
     }
     
     
-   
+    /**
+     * Dispatch the request
+     * 
+     * @see receiveActionRequest()
+     * 
+     * @param array $parts
+     * 
+     * @return boolean
+     */
     public function dispatchRequest($parts) {
         if(count($parts) == 0) {
             if($this->getRequest()->getMethod() == 'POST') {
@@ -263,6 +397,15 @@ END;
         return $this->receiveActionRequest($parts);
     }
     
+    /**
+     * Receive the action request
+     * 
+     * @see \cricket\core\Container::receiveActionRequest($parts)
+     * 
+     * @param array $inParts
+     * 
+     * @return boolean
+     */
     protected function receiveActionRequest($parts) {
         $next = array_shift($parts);
         if(count($parts) == 0) {
@@ -283,11 +426,24 @@ END;
     }
     
     
-    // BEGIN PRIVATE MESSAGE RECEIVER METHODS
+	/**
+	 * Register message receiver 
+	 * 
+	 * @param MessageReceiver $inReceiver
+	 * 
+	 * @return void
+	 */
     public function mcRegisterReceiver(MessageReceiver $inReceiver) {
         $this->_mcReceivers[] = $inReceiver;
     }
     
+    /**
+     * Remove message receiver
+     *
+     * @param MessageReceiver $inReceiver
+     *
+     * @return void
+     */
     public function mcRemoveReceiver(MessageReceiver $inReceiver) {
         $p = array_search($inReceiver,$this->_mcReceivers);
         if($p !== false) {

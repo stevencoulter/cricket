@@ -21,7 +21,12 @@
 
 namespace cricket\components;
 
-
+/**
+ * A component that renders in a dialog box
+ * 
+ * See jQuery dialog
+ *
+ */
 abstract class DialogComponent extends \cricket\core\Component {
     
     public $mTitle;

@@ -21,6 +21,11 @@
 
 namespace cricket\components;
 
+/**
+ * A class to hold a subset of a collection of items and the size of the entier set
+ *
+ */
+
 class Table_DataSet {
     public $totalCount;
     public $items;

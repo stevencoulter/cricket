@@ -23,6 +23,11 @@ namespace cricket\components;
 
 use cricket\core\Component;
 
+/**
+ * A smple placeholder component that renders nothing
+ *
+ */
+
 class Slug extends Component {
 	public function render() {
 		$this->renderFunction(function($ctx,$tpx){});
