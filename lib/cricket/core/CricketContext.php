@@ -304,7 +304,7 @@ class CricketContext {
      *  Return the Page
      *  
      *  @return Page
-     * /
+     */
     public function getPage() {
         return $this->page;
     }

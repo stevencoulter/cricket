@@ -37,7 +37,7 @@ class Translator {
 	 * @return string
 	 */
 	public static function getPageClassName($inPage, $inPageSearchPaths) {
-		$pageSearchPaths = $inPageSearchPaths();
+		$pageSearchPaths = $inPageSearchPaths;
 		$thisClass = get_class($inPage);
 	
 		$longestMatch = "";
