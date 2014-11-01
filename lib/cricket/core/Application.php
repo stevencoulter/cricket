@@ -208,7 +208,7 @@ class Application {
     }
     
     /**
-     * Does nothing?
+     * Register any modules used in the application, user specified for initializeModules
      *
      * @param string $inContextRootURL
      * @param boolean $inUsePHPExtension
