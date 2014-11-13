@@ -441,7 +441,7 @@ abstract class Container implements MessageReceiver {
         
         $iter = new SearchPathIterator($class);
         while($iter->hasNext()) {
-            $testPath = $iter->next() . "/" . $path;
+            $testPath = $iter->next() . DIRECTORY_SEPARATOR . $path;
             if(file_exists($testPath)) {
                 return $testPath;
             }

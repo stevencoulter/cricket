@@ -3,6 +3,9 @@
 
 checkForArgument($argv,1);
 
+/**
+ * @todo have this create a basic page
+ */
 switch ($argv[1]) {
 	case "new":
 		checkForArgument($argv,2);
@@ -99,14 +102,14 @@ PHP;
 	$php = <<<PHP
 <?php
 
-require_once("cricket/entry.php");
+require_once("cricket".DIRECTORY_SEPARATOR."entry.php");
 use cricket\core\Dispatcher;
 
 \$path = pathinfo(__FILE__);
 \$contextRootPath = realpath(\$path['dirname']);
 
 \$dispatcher = new Dispatcher(false, Config::getContextRoot(), \$contextRootPath,array(
-    'resources/cricket' => "/usr/lib/php/cricket", // this has to be mapped in your apache config
+    'resources/cricket' => ".DIRECTORY_SEPARATOR."usr".DIRECTORY_SEPARATOR."lib".DIRECTORY_SEPARATOR."php".DIRECTORY_SEPARATOR."cricket", // this has to be mapped in your apache config
 ));
 \$dispatcher->dispatchRequest();
 	
@@ -117,14 +120,14 @@ PHP;
 	$php = <<<PHP
 <?php
 
-require_once("cricket/entry.php");
+require_once("cricket".DIRECTORY_SEPARATOR."entry.php");
 
 header("Location: " . Config::default_url());
 PHP;
 	file_put_contents("index.php", $php);
 	
-	exec("mkdir -p app/pages/");
-	exec("mkdir -p app/components");
+	exec("mkdir -p app".DIRECTORY_SEPARATOR."pages");
+	exec("mkdir -p app".DIRECTORY_SEPARATOR."components");
 
 	
 	$php = <<<PHP
@@ -152,7 +155,7 @@ class Application extends CricketApplication {
 }
 	
 PHP;
-	file_put_contents("app/Application.php", $php);
+	file_put_contents("app".DIRECTORY_SEPARATOR."Application.php", $php);
 }
 
 function newPage($inName, $inExtension = null) {
@@ -187,9 +190,9 @@ class Page{$inName} extends {$className} {
 PHP;
 	
 	$name = "Page{$inName}";
-	exec("mkdir -p app/pages/{$name}/templates");
-	file_put_contents("app/pages/{$name}/templates/_{$name}.php", "");
-	file_put_contents("app/pages/Page{$inName}.php", $php);
+	exec("mkdir -p app".DIRECTORY_SEPARATOR."pages".DIRECTORY_SEPARATOR."{$name}".DIRECTORY_SEPARATOR."templates");
+	file_put_contents("app".DIRECTORY_SEPARATOR."pages".DIRECTORY_SEPARATOR."{$name}".DIRECTORY_SEPARATOR."templates".DIRECTORY_SEPARATOR."_{$name}.php", "");
+	file_put_contents("app".DIRECTORY_SEPARATOR."pages".DIRECTORY_SEPARATOR."Page{$inName}.php", $php);
 }
 
 function newComponent($inName, $inExtension = null) {
@@ -220,7 +223,7 @@ class {$inName} extends {$className} {
 PHP;
 	
 	$name = "{$inName}";
-	exec("mkdir -p app/components/{$name}/templates");
-	file_put_contents("app/components/{$name}/templates/_{$name}.php", "");
-	file_put_contents("app/components/{$name}.php", $php);
+	exec("mkdir -p app".DIRECTORY_SEPARATOR."components".DIRECTORY_SEPARATOR."{$name}".DIRECTORY_SEPARATOR."templates");
+	file_put_contents("app".DIRECTORY_SEPARATOR."components".DIRECTORY_SEPARATOR."{$name}".DIRECTORY_SEPARATOR."templates".DIRECTORY_SEPARATOR."_{$name}.php", "");
+	file_put_contents("app".DIRECTORY_SEPARATOR."components".DIRECTORY_SEPARATOR."{$name}.php", $php);
 }

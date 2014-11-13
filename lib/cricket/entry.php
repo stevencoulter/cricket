@@ -19,7 +19,7 @@
  */
 
 
-require_once(dirname(__FILE__) . "/autoinclude.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "autoinclude.php");
 $APPLICATION = null;
 
 // create a global $INLINE that can be used for function calls or consts in string interpolation

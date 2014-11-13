@@ -40,7 +40,7 @@
  * @return boolean Returns true if the class exists.  The path is added to the php include path
  */
 function __cricket_autoload($className) {
-    $path = str_replace("\\", "/", $className) . ".php";
+    $path = str_replace("\\", DIRECTORY_SEPARATOR, $className) . ".php";
     if(stream_resolve_include_path($path) !== false) {
         include_once($path);
         return class_exists($className,false);
