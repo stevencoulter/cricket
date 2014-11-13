@@ -463,7 +463,7 @@ class CricketContext {
      * @return string
      */
     public function call_href($inActionID,$inDataString = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
-    	return $this->href($inActionID,$inData,$indicatorID,$confirmation,$requestChannel);
+    	return $this->href($inActionID,$inDataString,$indicatorID,$confirmation,$requestChannel);
     }
     
     /**

@@ -23,6 +23,7 @@ div.table-body {
 
 table.list {
     width: 100%;
+    border-collapse:collapse;
 }
 
 
@@ -45,6 +46,8 @@ table.list th {
     font-weight: bold;
     padding:3px;
     border-right: 1px solid #999999;
+    border-bottom: 1px solid #999999;
+    background-image: url(../img/table.png);
     cursor: pointer;
 }
 
