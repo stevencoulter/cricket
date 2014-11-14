@@ -127,7 +127,7 @@ class Translator {
 		
 		foreach($inPageSearchPaths as $thisTestNS) {
 			$thisTestClass = "$thisTestNS\\$inPageClass";
-			$thisTestPath = str_replace("\\","/",$thisTestClass) . ".php";
+			$thisTestPath = str_replace("\\",DIRECTORY_SEPARATOR,$thisTestClass) . ".php";
 			if(stream_resolve_include_path($thisTestPath) !== false) {
 				return $thisTestClass;
 			}

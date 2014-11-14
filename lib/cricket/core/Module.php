@@ -63,14 +63,14 @@ class Module {
      */
     public function resolveResourcePath($inResource,$inApplicationContextPath) {
         
-        if(strpos($inResource, '/') === 0) {
+        if(strpos($inResource, DIRECTORY_SEPARATOR) === 0) {
             return $inApplicationContextPath . $inResource;
         }
         
         
         $iter = new SearchPathIterator(get_class($this));
         while($iter->hasNext()) {
-            $testPath = $iter->next() . "/" . $inResource;
+            $testPath = $iter->next() . DIRECTORY_SEPARATOR . $inResource;
             if(file_exists($testPath)) {
                 return $testPath;
             }

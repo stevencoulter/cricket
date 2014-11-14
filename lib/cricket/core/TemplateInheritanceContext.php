@@ -149,6 +149,12 @@ class TemplateInheritanceContext {
      * @return void
      */
     public function flush() {
+    	
+    	if($this->currentBlock) {
+    		$this->currentBlock->blocks[] = ob_get_clean();
+    		$this->currentBlock = null;
+    	}
+    	 
         if($this->root) {
             $this->root->output();
             //echo $this->root;
