@@ -225,8 +225,11 @@ class CricketContext {
                 $inData = json_encode($inData);
             }
         }
-        
-        $url = $this->component->getActionUrl($inActionID, $inMutable);
+
+        if ($this->component instanceof Page)
+        	$url = $this->component->getActionUrl($inActionID);
+        else
+        	$url = $this->component->getActionUrl($inActionID, $inMutable);
         $data = $inData === null ? "{}" : $inData;
         $iID = $indicatorID === null ? "null" : "'$indicatorID'";
         if($confirmation) {
@@ -572,6 +575,8 @@ class CricketContext {
      * @param string $inFormID
      * @param string $requestChannel
      * @param boolean $failSilent
+     * 
+     * @todo We can probably remove all jQuery references from these functions
      * 
      * @return string
      */

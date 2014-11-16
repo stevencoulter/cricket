@@ -24,6 +24,8 @@ namespace app;
 use cricket\core\Application as CricketApp;
 use cricket\core\Dispatcher;
 
+use app\adapters\DummyAdapter;
+
 class Application extends CricketApp {    
     
     public function __construct() {
@@ -38,5 +40,10 @@ class Application extends CricketApp {
             )
         ));
     }
-        
+
+    public function getAuthenticationAdapters() {
+    	return array(
+    		new DummyAdapter()	
+    	);
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * (C) Copyright 2014 Bill Hubauer <bill@hubauer.com>
+ * (C) Copyright 2014 Steven Coulter <steven.coulter@gmail.com>
  * 
  * This file is part of Cricket  https://github.com/bhubauer/cricket
  * 
@@ -18,35 +18,10 @@
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+namespace app\pages;
 
-namespace cricket\core;
+use cricket\contrib\auth\pages\PageLogin as CricketLoginPage;
 
-
-class ResponseContext {
-    
-    
-    public function setContentType($inType) {
-        header("Content-Type: $inType");
-    }
-    
-    public function sendError($inErrorCode) {
-        header("HTTP/1.0 $inErrorCode");
-        flush();
-    }
-    
-    public function sendAccessDenied() {
-        $this->sendError("403 Forbidden");
-        echo "403 Forbidden";
-    }
-    
-    /**
-     * @todo Ajax requests seem to always merit ajax responses -- i.e. submitting a form through ajax and redirecting afterwards will start to create an ajax response, and the javascript object will be incorrectly spit out in the flush here
-     * @param unknown $inUrl
-     */
-    public function sendRedirect($inUrl) {
-        header("Location: $inUrl");
-        flush();
-    }
-    
+class PageLogin extends CricketLoginPage {
     
 }
