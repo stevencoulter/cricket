@@ -33,5 +33,16 @@ abstract class Grid extends Table {
 		$this->renderGrid($inParams);
 	}
 	
+	public function action_sort() {
+		$column = $this->getParameter('column');
+		$direction = $this->getParameter('direction');
+	
+		$this->sort = new Table_Sort($column, $direction);
+	
+		$this->setStart(0);
+	
+		$this->invalidate();
+	}
+	
 	abstract protected function renderGrid($inParams);
 }
