@@ -34,6 +34,10 @@ abstract class Grid extends Table {
 	}
 	
 	public function action_sort() {
+		/* Allows grid to function with table template */
+		if ($this->getParameter('sort')) {
+			parent::action_sort();
+		} else {
 		$column = $this->getParameter('column');
 		$direction = $this->getParameter('direction');
 	
@@ -42,6 +46,7 @@ abstract class Grid extends Table {
 		$this->setStart(0);
 	
 		$this->invalidate();
+		}
 	}
 	
 	abstract protected function renderGrid($inParams);

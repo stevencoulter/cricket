@@ -313,9 +313,9 @@ class Dispatcher {
                     // TODO:  This shouldn't be here, but I need to make sure that there is a session before output starts so that I can get 
                     // the session key.    I need to remove the dependancy on the session key
                     
-                	#if($qName::$SESSION_MODE != Page::MODE_STATELESS) {
-                    #    $app->ensureSession();
-                    #}
+                	if($qName::$SESSION_MODE != Page::MODE_STATELESS) {
+                        $app->ensureSession();
+                    }
                 }
 
                 if($process) {
