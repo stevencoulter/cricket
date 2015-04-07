@@ -91,7 +91,7 @@ class Translator {
 		$prefix = $inPageClassPrefix;
 		$regex = "/^{$prefix}/";
 		$last = preg_replace($regex,'',$last);
-		$parts[count($parts) - 1] = strtolower($last);
+		$parts[count($parts) - 1] = $last;
 	
 		return implode("/",$parts);
 	}
