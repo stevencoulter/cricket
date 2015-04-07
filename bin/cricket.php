@@ -205,25 +205,36 @@ function newComponent($inName, $inExtension = null) {
 		$className = 'Component';
 	}
 	
+	$names = explode("\\",$inName);
+	$componentName = array_pop($names);
+	$ns = implode("",$names);
+	if ($ns)
+		$ns = "\\".$ns;
+	
 	$php = <<<PHP
 <?php
 
-namespace app\components;
+namespace app\components{$ns};
 
 use {$extension};
 
-class {$inName} extends {$className} {
+class {$componentName} extends {$className} {
 	
 	public function render() {
-		\$this->renderTemplate('templates/_{$inName}.php',array(
+		\$this->renderTemplate('templates/_{$componentName}.php',array(
 		));
 	}
 
 }	
 PHP;
-	
-	$name = "{$inName}";
+	$nn = "";
+	foreach ($names as $name) {
+		$nn.= DIRECTORY_SEPARATOR.$name;
+	}
+	if ($nn)
+		$nn.= DIRECTORY_SEPARATOR;
+	$name = "{$nn}{$componentName}";
 	exec("mkdir -p app".DIRECTORY_SEPARATOR."components".DIRECTORY_SEPARATOR."{$name}".DIRECTORY_SEPARATOR."templates");
-	file_put_contents("app".DIRECTORY_SEPARATOR."components".DIRECTORY_SEPARATOR."{$name}".DIRECTORY_SEPARATOR."templates".DIRECTORY_SEPARATOR."_{$name}.php", "");
+	file_put_contents("app".DIRECTORY_SEPARATOR."components".DIRECTORY_SEPARATOR."{$name}".DIRECTORY_SEPARATOR."templates".DIRECTORY_SEPARATOR."_{$componentName}.php", "");
 	file_put_contents("app".DIRECTORY_SEPARATOR."components".DIRECTORY_SEPARATOR."{$name}.php", $php);
 }
