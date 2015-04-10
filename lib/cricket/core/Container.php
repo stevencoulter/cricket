@@ -24,6 +24,7 @@ use cricket\core\ResponseContext;
 
 
 use \cricket\components\DialogComponent;
+use cricket\components\DialogWrapper;
 
 /**
  * The core class of a cricket object
@@ -324,6 +325,24 @@ abstract class Container implements MessageReceiver {
         }
     }
     
+    /**
+     * Add a DialogComponent and call it's open method
+     *
+     * @link DialogComponent::openDialog()
+     *
+     * @param DialogComponent $newComponent
+     *
+     * @return void
+     * 
+     *     public function __construct($inID,$inTitle,$inWidth,Component $inComponent, $inFocus = '') {
+
+     */
+    public function addComponentAsModal($inTitle, $inWidth, Component $inComponent, $inFocus = '') {
+    	if($this->getPage()->isAjax()) {
+    		$dialog = new DialogWrapper(rand(), $inTitle, $inWidth, $inComponent,$inFocus);
+			$this->addDialogComponent($dialog);
+    	}
+    }
     
     /**
      * Get a component specified by its local ID
