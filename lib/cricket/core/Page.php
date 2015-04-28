@@ -277,11 +277,10 @@ abstract class Page extends Container {
 	 */
     public function getActionUrl($inActionID,$inPageClassName = null) {
         $module = null;
-        $instanceID = null;
+        $instanceID = $this->getInstanceID();
         if($inPageClassName === null) {
             $inPageClassName = get_class($this);
             $module = $this->getModule();
-            $instanceID = $this->getInstanceID();
         }else{
             list($module,$class) = Application::getInstance()->pageClass2ModuleAndPageID($inPageClassName);
         }
