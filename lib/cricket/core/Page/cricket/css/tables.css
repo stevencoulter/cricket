@@ -67,9 +67,6 @@ table.list tr.alt td {
 body table.list .selected td {
     background-color: #bde7a4;
 }
-div.container {
-    overflow:hidden;
-}
 
 
 table.list th.sort a {
