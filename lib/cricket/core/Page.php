@@ -433,7 +433,8 @@ END;
 	 * @return void
 	 */
     public function mcRegisterReceiver(MessageReceiver $inReceiver) {
-        $this->_mcReceivers[] = $inReceiver;
+    	if (!in_array($inReceiver, $this->_mcReceivers))
+        	$this->_mcReceivers[] = $inReceiver;
     }
     
     /**
