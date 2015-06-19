@@ -123,6 +123,9 @@ class Translator {
 			if(strpos($inPageClass, $thisPath) === 0) {
 				return $inPageClass;
 			}
+			if(class_exists($thisPath."\\".$inPageClass)) {
+                                return $thisPath."\\".$inPageClass;
+                        }
 		}
 		
 		foreach($inPageSearchPaths as $thisTestNS) {
