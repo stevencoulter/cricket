@@ -8,5 +8,5 @@
     "autoload": {
         "psr-0": {"cricket\\": "lib/cricket/"}
     },
-    "include-path": ["lib/cricket/"]
+    "include-path": ["lib/"]
 }
