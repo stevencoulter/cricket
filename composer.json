@@ -6,7 +6,7 @@
         "type": "git"
     },
     "autoload": {
-        "psr-0": {"cricket\\": "lib/cricket/"}
+        "psr-0": {"cricket\\": "lib/"}
     },
     "include-path": ["lib/"]
 }
