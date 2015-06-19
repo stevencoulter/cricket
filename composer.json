@@ -4,5 +4,8 @@
     "dist": {
         "url": "https://github.com/stevencoulter/cricket.git",
         "type": "git"
+    },
+    "autoload": {
+        "psr-0": {"cricket\\": "lib/cricket/"}
     }
 }
