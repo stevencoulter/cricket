@@ -118,12 +118,12 @@ class Translator {
 	 * 
 	 * @return string
 	 */
-	public static function resolvePageClass($inPageClass, $inPageSearchPaths) {		
+	public static function resolvePageClass($inPageClass, $inPageSearchPaths, $inAutoLoad = true) {		
 		foreach($inPageSearchPaths as $thisPath) {
 			if(strpos($inPageClass, $thisPath) === 0) {
 				return $inPageClass;
 			}
-			if(class_exists($thisPath."\\".$inPageClass, false)) {
+			if(class_exists($thisPath."\\".$inPageClass, $inAutoLoad)) {
             	return $thisPath."\\".$inPageClass;
             }
 		}
