@@ -119,13 +119,16 @@ class Translator {
 	 * @return string
 	 */
 	public static function resolvePageClass($inPageClass, $inPageSearchPaths, $inAutoLoad = true) {		
+		if ($inPageClass == 'PageApi')
+			$inAutoLoad = false;
+			
 		foreach($inPageSearchPaths as $thisPath) {
 			if(strpos($inPageClass, $thisPath) === 0) {
 				return $inPageClass;
 			}
 			if(class_exists($thisPath."\\".$inPageClass, $inAutoLoad)) {
-            	return $thisPath."\\".$inPageClass;
-            }
+            			return $thisPath."\\".$inPageClass;
+            		}
 		}
 		
 		foreach($inPageSearchPaths as $thisTestNS) {
