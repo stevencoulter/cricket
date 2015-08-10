@@ -230,6 +230,14 @@ class Application {
     }
     
     /**
+     *
+     * @return Module
+     */
+    public function getModules() {
+    	return $this->modules;
+    }
+    
+    /**
      * Set the active module
      * 
      * @see getActiveModule()
