@@ -95,7 +95,7 @@ $grid_indicator = 'grid_sort_indicator';
             <? foreach ($desc['items'] as $item) {
                     if (!($counter % $numColumns))
                         echo "</tr><tr>";
-               echo "<td style=\"width:$td_width\">";
+               echo '<td style="width:' . $td_width . ';vertical-align:top">';
 
                $displayItem($item);
 
