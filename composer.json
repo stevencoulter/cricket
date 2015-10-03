@@ -1,9 +1,8 @@
 {
     "name": "cricket",
-    "version": "dev-master",
     "dist": {
         "url": "https://github.com/stevencoulter/cricket.git",
-        "type": "git"
+        "type": "vcs"
     },
     "autoload": {
         "psr-0": {"cricket\\": "lib/"}
