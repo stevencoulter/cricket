@@ -29,6 +29,12 @@ switch ($argv[1]) {
 				exit(0);
 		}
 		break;
+	case "parse":
+		checkForArgument($argv,2);
+		$file = $argv[2];
+		$structure = new SimpleXMLElement(file_get_contents($file));
+		parseXml($file, $structure);
+		break;
 	default:
 		printHelp();
 		exit(0);
@@ -43,6 +49,23 @@ function checkForArgument($inArgv, $inIndex) {
 
 function printHelp() {
 	print "Usage:\n";
+}
+
+function parseXml($filename, $structure) {
+	$projectName = str_replace(".xml","",$filename);
+	newProject($projectName);
+	
+	if ($structure->page) {
+		foreach ($structure->page as $page) {
+			newPage($page->name,$page->extension, $page->location);
+		}
+	}
+	
+	if ($structure->component) {
+		foreach ($structure->component as $component) {
+			newComponent($component->name,$component->extension, $component->location);
+		}
+	}
 }
 
 function newProject($inName, $inExtension = null) {
@@ -158,7 +181,7 @@ PHP;
 	file_put_contents("app".DIRECTORY_SEPARATOR."Application.php", $php);
 }
 
-function newPage($inName, $inExtension = null) {
+function newPage($inName, $inExtension = null, $inLocation = "pages") {
 	if ($inExtension) {
 		$extension = $inExtension;
 		$splits = explode("\\", $inExtension);
@@ -195,7 +218,7 @@ PHP;
 	file_put_contents("app".DIRECTORY_SEPARATOR."pages".DIRECTORY_SEPARATOR."Page{$inName}.php", $php);
 }
 
-function newComponent($inName, $inExtension = null) {
+function newComponent($inName, $inExtension = null, $inLocation = "components") {
 	if ($inExtension) {
 		$extension = $inExtension;
 		$splits = explode("\\", $inExtension);
@@ -208,6 +231,7 @@ function newComponent($inName, $inExtension = null) {
 	$names = explode("\\",$inName);
 	$componentName = array_pop($names);
 	$ns = implode("",$names);
+		
 	if ($ns)
 		$ns = "\\".$ns;
 	

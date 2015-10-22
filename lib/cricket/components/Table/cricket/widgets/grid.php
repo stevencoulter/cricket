@@ -41,7 +41,10 @@ $grid_indicator = 'grid_sort_indicator';
 		        	 cricket_ajax('<?= $cricket->component->getActionUrl('search')?>',{'field':jQuery('#grid_search').val(),'value':jQuery('#grid_search_character').val()}, 'ind_grid_search');
 			        }"></input>
 			        &nbsp;
-			        <button onclick="cricket_ajax('<?= $cricket->component->getActionUrl('search')?>',{'field':jQuery('#grid_search').val(),'value':''}, 'ind_grid_search');">
+			        <button class='btn' onclick="cricket_ajax('<?= $cricket->component->getActionUrl('search')?>',{'field':jQuery('#grid_search').val(),'value':jQuery('#grid_search_character').val()}, 'ind_grid_search');">
+			        	Search
+			        </button>
+			        <button class='btn' onclick="cricket_ajax('<?= $cricket->component->getActionUrl('search')?>',{'field':jQuery('#grid_search').val(),'value':''}, 'ind_grid_search');">
 			        	Clear
 			        </button>
 		        <?= $cricket->indicator('ind_grid_search'); ?>
