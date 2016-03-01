@@ -458,6 +458,15 @@ abstract class Container implements MessageReceiver {
             }
         }
         
+        /* First search for overridden namespace paths in the root directory of the namespace */
+        $override_path = str_replace("\\",DIRECTORY_SEPARATOR, $class) . DIRECTORY_SEPARATOR . $path;
+        $reflector = new \ReflectionClass(get_class(Application::getInstance()));        
+        $start_path = str_replace(str_replace("\\",DIRECTORY_SEPARATOR,$reflector->getName()).".php", '', $reflector->getFileName());
+        $override_path = $start_path . $override_path;
+        if(file_exists($override_path)) {
+        	return $override_path;
+        }
+        
         $iter = new SearchPathIterator($class);
         while($iter->hasNext()) {
             $testPath = $iter->next() . DIRECTORY_SEPARATOR . $path;
