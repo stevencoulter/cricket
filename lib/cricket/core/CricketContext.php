@@ -32,11 +32,11 @@ class CricketContext {
     //////////////////////////////////////////
     // header contribution
     
-	/**
-	 * Return contirbutions to the head
-	 * 
-	 * @return string
-	 */
+    /**
+     * Return contributions to the head
+     * 
+     * @return string
+     */
     public function head() {
         $result = $this->page->getHeadContributions();
         return $result;
@@ -797,5 +797,21 @@ class CricketContext {
             )
         ));
     }
+    
+    /**
+     * Returns (space-separated) class names associated with the given key
+     * 
+     * @param string $key
+     */
+    public function getClasses($key) {
+        $app = Application::getInstance();
+        if(method_exists($app, 'getFEComponentClasses')) {
+            return $app->getFEComponentClasses($key);
+        } else {
+            error_log('Application does not implement "getFEComponentClasses($key) method. $cricket->getClasses() will not function correctly"');
+            return '';
+        }
+    }
+    
 }
 
