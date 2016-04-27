@@ -129,14 +129,21 @@ class CricketContext {
     }
     
     /**
-     * Genreate a resource URL
+     * Generate a resource URL
      * 
      * @param string $inPath
      * 
      * @return string
      */
-    public function resource_url($inPath) {
+    public function resource_url($inPath, $useMinified = false) {
         $result = null;
+        
+        // Add ".min" before file extension
+        if($useMinified) {
+            $pattern = "/(.*)(\..*)$/";
+            $replacement = '$1.min$2';
+            $inPath = preg_replace($pattern, $replacement, $inPath);
+        }
         
         if($this->component !== null) {
             $result = $this->component->resolveResourceUrl($this->page,get_class($this->component),$inPath);
