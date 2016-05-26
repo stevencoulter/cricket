@@ -70,12 +70,12 @@ class CricketContext {
      * 
      * @return void
      */
-    public function static_component($inStaticID,$inRenderID,$inData) {
+    public function static_component($inStaticID, $inRenderID, $inData) {
         if($this->component !== null) {
             $inID = $this->component->resolveChildID($inStaticID);
         }
         
-        $this->page->renderStaticComponent($inID,$inRenderID,$inData);
+        $this->page->renderStaticComponent($inID, $inRenderID, $inData);
     }
     
 	/**
@@ -97,7 +97,7 @@ class CricketContext {
      * 
      * @return string
      */
-    public function indicator($inID,$extraStyles="") {
+    public function indicator($inID, $extraStyles="") {
         $imagePath = $this->resource_url("cricket/img/indicator.gif");
         return "<img src=\"$imagePath\" border=\"0\" id=\"$inID\" style=\"visibility:hidden;$extraStyles\">";
     }
@@ -113,7 +113,7 @@ class CricketContext {
      * 
      * @return URL
      */
-    public function page_url($pageClass = null,$actionID = null) {
+    public function page_url($pageClass = null, $actionID = null) {
         return $this->page->getActionUrl($actionID, $pageClass);
     }
     

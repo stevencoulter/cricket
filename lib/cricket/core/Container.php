@@ -96,18 +96,7 @@ abstract class Container implements MessageReceiver {
      * 
      * @return string
      */
-    public function getDivClass() {
-                
-        // Get CricketContext
-        $cricket = $this->getPage()->getRequest()->getAttribute("cricket");
-        
-        // Make the class name follow typical naming conventions
-        // (Adds a hyphen before each capital letter (excluding the first), then make all lowercase)
-        $feComponent = strtolower(preg_replace('/([A-Z]+)/', '-$1', lcfirst($this->getClassName())));
-        
-        // Get the class names
-        return $cricket->getClasses($feComponent);
-    }
+    public function getDivClass() {}
     
     /**
      * Return this object's class (minus the namespace)

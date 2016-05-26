@@ -158,7 +158,7 @@ abstract class Page extends Container {
      * 
      * @return void
      */
-    public function beginRequest(RequestContext $req,ResponseContext $resp) {
+    public function beginRequest(RequestContext $req, ResponseContext $resp) {
         $this->_request = $req;
         $this->_response = $resp;
     }
@@ -192,27 +192,41 @@ abstract class Page extends Container {
         return $this->_instanceID;
     }
     
-	/**
-	 * Cause a component to render
-	 * 
-	 * @param string $inID Component ID
-	 */    
+    /**
+     * Cause a component to render
+     * 
+     * @param string $inID Component ID
+     */    
     public function renderComponent($inID) {
+        
         /* @var $c Component */
         $c = $this->findComponent($inID);
         if($c !== null) {
-            $cDivID = $c->getDivId();
-            $cDivClass = $c->getDivClass();
-            if($cDivClass) {
-                $cDivClass = " class='$cDivClass'";
-            }
-            echo "<div id = '$cDivID'{$cDivClass}>";
+            
             $this->_request->pushContext();
-            $c->render();
+            
+            ob_start();
+            $c->render(); // A
+            $content = ob_get_clean();
+            
+            // Logic nested inside template sets Component->overrideOuterDiv (rendered and captured on line "A" above)
+            if(!$c->overrideOuterDiv) {
+                $cDivID = $c->getDivId();
+                $cDivClass = $c->getDivClass();
+                if($cDivClass) {
+                    $cDivClass = ' class="$cDivClass"';
+                }
+                echo '<div id="' . $cDivID . '"' . $cDivClass . '>';
+                echo $content;
+                echo "</div>";
+            } else {
+                echo $content;
+            }
+            
             $this->_request->popContext();
-            echo "</div>";
-        }else{
-            echo "<div style='color:white;background-color:red;'>MISSING COMPONENT: " . $inID . "</div>";
+            
+        } else {
+            echo '<div style="color: white; background-color: red;">MISSING COMPONENT: ' . $inID . '</div>';
         }
     }
     
@@ -225,7 +239,7 @@ abstract class Page extends Container {
      * 
      * @return void
      */
-    public function renderStaticComponent($inID,$inRenderID,$inData) {
+    public function renderStaticComponent($inID, $inRenderID, $inData) {
         /* @var $c StaticComponent */
         $c = $this->findComponent($inID);
         if($c !== null) {
@@ -245,13 +259,13 @@ abstract class Page extends Container {
         }
     }
     
-	/**
-	 * Returns leaf name of Page class
-	 * 
-	 * @return string
-	 */
+    /**
+     * Returns leaf name of Page class
+     * 
+     * @return string
+     */
     public function getPageClassName() {
-    	return Translator::getPageClassName($this, $this->getModule()->getPageSearchPaths());
+        return Translator::getPageClassName($this, $this->getModule()->getPageSearchPaths());
     }
     
     /**
@@ -268,14 +282,14 @@ abstract class Page extends Container {
         return $this->_module;
     }
 
-	/**
-	 * Create an action URL
-	 * 
-	 * @see \cricket\core\Container::getActionUrl($inActionID)
-	 * 
-	 * @return URL
-	 */
-    public function getActionUrl($inActionID,$inPageClassName = null) {
+    /**
+     * Create an action URL
+     * 
+     * @see \cricket\core\Container::getActionUrl($inActionID)
+     * 
+     * @return URL
+     */
+    public function getActionUrl($inActionID, $inPageClassName = null) {
         $module = null;
         $instanceID = $this->getInstanceID();
         if($inPageClassName === null) {
@@ -340,7 +354,7 @@ abstract class Page extends Container {
             $this->_ajax->renderNow($aThis);
         } 
     }
-	
+    
     /**
      * Add the Page's contributions to the head
      * 
@@ -368,7 +382,7 @@ END;
         $added = array();
         $results = array();
                 
-        $this->contributeComponentsToHead($added,$results);
+        $this->contributeComponentsToHead($added, $results);
         return implode("\n", $results);
     }
     
@@ -425,16 +439,16 @@ END;
     }
     
     
-	/**
-	 * Register message receiver 
-	 * 
-	 * @param MessageReceiver $inReceiver
-	 * 
-	 * @return void
-	 */
+    /**
+     * Register message receiver 
+     * 
+     * @param MessageReceiver $inReceiver
+     * 
+     * @return void
+     */
     public function mcRegisterReceiver(MessageReceiver $inReceiver) {
-    	if (!in_array($inReceiver, $this->_mcReceivers))
-        	$this->_mcReceivers[] = $inReceiver;
+        if (!in_array($inReceiver, $this->_mcReceivers))
+            $this->_mcReceivers[] = $inReceiver;
     }
     
     /**

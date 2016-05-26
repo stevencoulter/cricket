@@ -22,11 +22,13 @@ namespace cricket\core;
 
 abstract class Component extends Container {
     
-	/**
-	 * @param string $inID
-	 * 
-	 * @return void
-	 */
+    public $overrideOuterDiv = false; // Only set this to true from within a template...please
+    
+    /**
+     * @param string $inID
+     * 
+     * @return void
+     */
     public function __construct($inID) {
         parent::__construct($inID);
     }
