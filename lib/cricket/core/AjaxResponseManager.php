@@ -68,7 +68,7 @@ class AjaxResponseManager {
                 $c->getPage()->getRequest()->pushContext();
                 ob_start();
                 $c->render();
-                $this->response->setUpdate($c->getDivId(),ob_get_clean());
+                $this->response->setUpdate($c->getDivId(), ob_get_clean(), $c->overrideOuterDiv);
                 $c->getPage()->getRequest()->popContext();
             }
         }

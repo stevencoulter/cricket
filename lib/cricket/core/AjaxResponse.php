@@ -42,6 +42,7 @@ class AjaxResponse {
             'redirect' => "",
             'scripts_pre' => array(), // List<String>
             'updates' => array(),  // Map<String,String>
+            'replacements' => array(),
             'append' => array(),
             'scripts_post' => array(), // List<String>
             'modal' => null,
@@ -136,8 +137,10 @@ class AjaxResponse {
      *
      * @return void
      */
-    public function setUpdate($inID,$inContent) {
+    public function setUpdate($inID, $inContent, $replace = false) {
         $this->m['updates'][$inID] = $inContent;
+        if($replace)
+            $this->m['replacements'][$inID] = true;
     }
     
     /**
