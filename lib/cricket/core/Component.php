@@ -94,7 +94,7 @@ abstract class Component extends Container {
     }
     
     /**
-     * Detatch component from parent
+     * Detach component from parent
      *
      * @link getParent()
      * @link removeComponent()

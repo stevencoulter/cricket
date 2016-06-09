@@ -959,5 +959,30 @@ abstract class Container implements MessageReceiver {
     public function clearAppSession($key) {
         Application::getInstance()->clearSessionAttribute($this->getRequest(),$key);
     }
-    
+
+    /**
+     * Get all Action urls
+     *
+     * @return array
+     */
+    public function getActionURLs() {
+        $arr = array();
+        $actions = preg_grep('/^action_/', get_class_methods($this));
+        foreach($actions as $action) {
+            $actionName = str_replace('action_', '', $action);
+            $arr[$actionName] = $this->getActionUrl($actionName);
+        }
+        return $arr;
+    }
+
+    /**
+     * Echos out any contributions to the Page's HTML <head>
+     *
+     * @param Page $page
+     *
+     * @return void
+     */
+    static public function contributeToHead($page) {
+        echo (new JSModuleManager())->getRequiredHeadContributions($page->getInstanceID());
+    }
 }

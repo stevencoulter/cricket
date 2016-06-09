@@ -356,24 +356,6 @@ abstract class Page extends Container {
     }
     
     /**
-     * Add the Page's contributions to the head
-     * 
-     * @param Page $page
-     * 
-     * @return string
-     */
-    static public function contributeToHead($page) {
-        $cricketJS = Container::resolveResourceUrl($page, get_class($page), "cricket/js/cricket.js");
-        $pageID = $page->getInstanceID();
-        return <<<END
-            <script type="text/javascript" src = "$cricketJS"></script>
-            <script type="text/javascript">
-                _CRICKET_PAGE_INSTANCE_ = '$pageID';
-            </script>
-END;
-    }
-    
-    /**
      * Get the Page's Component's contributions to the head
      * 
      * @return string
