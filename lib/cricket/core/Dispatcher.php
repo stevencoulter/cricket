@@ -251,7 +251,7 @@ class Dispatcher {
             	
             	$mutable = ($qName::$SESSION_MODE == Page::MODE_STATELESS) ? false : $mutableCall;
             	Application::getInstance()->setMutable($mutable);
-            	 
+
                 $isPost = $this->req->getMethod() == 'POST';
                 $isCricketAjax = $this->req->getHeader("x-cricket-ajax") !== null;
                 $postedInstanceID = isset($_REQUEST[self::INSTANCE_ID]) ? $_REQUEST[self::INSTANCE_ID] : null;
