@@ -108,7 +108,7 @@ class CricketContext {
     ////////////////////////////////////
     //  URL generation
     /**
-     * Genreate a Page class URL
+     * Generate a Page class URL
      *
      * @param string $pageClass
      * @param string $actionID
@@ -301,7 +301,7 @@ class CricketContext {
      *
      * @return string require('cricket').ajax_form
      */
-    public function call_form_action($inJSFormReference, $inActionID, $inIndicatorID = null, $inConfirmation = null, $requestChannel = null) {
+    private function call_form_action($inJSFormReference, $inActionID, $inIndicatorID = null, $inConfirmation = null, $requestChannel = null) {
 
         $url = $this->component->getActionUrl($inActionID);
         $inIndicatorID = $inIndicatorID === null ? "null" : "'$inIndicatorID'";
@@ -456,7 +456,7 @@ class CricketContext {
 
 
     /**
-     * No longer needed -- instance ID embdeed into url
+     * No longer needed -- instance ID embedded into url
      *
      * @param unknown $inURL
      *
@@ -581,7 +581,7 @@ class CricketContext {
         $confirm = $inConfirmation === null ? "null" : "'$inConfirmation'";
         $channel = $requestChannel === null ? "null" : "'$requestChannel'";
 
-        return "javascript:require('cricket').ajax_form(document.querySelector('#$inFormSelector'), '$url', $ind, $confirm, $channel);";
+        return "javascript:require('cricket').ajax_form(document.getElementById('$inFormSelector'), '$url', $ind, $confirm, $channel);";
     }
 
     /**

@@ -21,19 +21,6 @@ class JSModuleManager {
 
     // ******* Public Methods *******
 
-
-    /*
-    $cricketJS = Container::resolveResourceUrl($page, get_class($page), "cricket/js/cricket.js");
-    $pageID = $page->getInstanceID();
-    return <<<END
-    <script type="text/javascript" src="$cricketJS"></script>
-        <script type="text/javascript">
-    _CRICKET_PAGE_INSTANCE_ = '$pageID';
-    </script>
-    END;
-    */
-
-
     /**
      * @param $pageID
      *
