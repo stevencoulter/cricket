@@ -97,8 +97,8 @@ class CricketContext {
      * 
      * @return string
      */
-    public function indicator($inID, $extraStyles="") {
-        $imagePath = $this->resource_url("cricket/img/indicator.gif");
+    public function indicator($inID, $extraStyles='') {
+        $imagePath = $this->resource_url('cricket/img/indicator.gif');
         return "<img src=\"$imagePath\" border=\"0\" id=\"$inID\" style=\"visibility:hidden;$extraStyles\">";
     }
     
@@ -567,10 +567,10 @@ class CricketContext {
      */
     public function form_action($inActionID,$inFormSelector,$inIndicatorID = null,$inConfirmation = null,$requestChannel = null) {
         $url = $this->component->getActionUrl($inActionID);
-        $ind = $inIndicatorID === null ? "null" : "&#39;$inIndicatorID&#39;";
-        $confirm = $inConfirmation === null ? "null" : "&#39;$inConfirmation&#39;";
-        $channel = $requestChannel === null ? "null" : "&#39;$requestChannel&#39;";
-        return "javascript:cricket_ajax_form(jQuery(&#39;#$inFormSelector&#39;).get()[0],&#39;$url&#39;,$ind,$confirm,$channel);";
+        $ind = $inIndicatorID === null ? "null" : "'$inIndicatorID'";
+        $confirm = $inConfirmation === null ? "null" : "'$inConfirmation'";
+        $channel = $requestChannel === null ? "null" : "'$requestChannel'";
+        return "javascript:cricket_ajax_form(jQuery('#$inFormSelector').get()[0],'$url',$ind,$confirm,$channel);";
     }
     
     /**
