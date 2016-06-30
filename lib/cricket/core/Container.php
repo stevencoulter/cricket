@@ -430,7 +430,7 @@ abstract class Container implements MessageReceiver {
             if($thisComp->_localID == $inLocalID) {
                 return $thisComp;
             }else{
-                $thisComp = $thisComp->findComponentLocalID($inLocalID);
+                $thisComp = $thisComp->findComponentByLocalID($inLocalID);
                 if($thisComp !== null) {
                     return $thisComp;
                 }
