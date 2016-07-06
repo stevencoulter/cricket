@@ -173,7 +173,7 @@ class CricketContext {
      * 
      * @return string
      */
-    public function onclick($inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
+    public function onclick($inActionID, $inData = null, $indicatorID = null, $confirmation = null, $requestChannel = null) {
         return Utils::escape_html($this->call_action($inActionID,$inData,$indicatorID,$confirmation,$requestChannel));
     }
     
@@ -188,7 +188,7 @@ class CricketContext {
      * 
      * @return string
      */
-    public function href($inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
+    public function href($inActionID, $inData = null, $indicatorID = null, $confirmation = null, $requestChannel = null) {
         return "javascript:" . $this->onclick($inActionID,$inData,$indicatorID,$confirmation,$requestChannel);
     }
     
@@ -205,7 +205,7 @@ class CricketContext {
      * 
      * @return string
      */
-    public function timer($interval,$repeat,$inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
+    public function timer($interval, $repeat, $inActionID, $inData = null, $indicatorID = null, $confirmation = null, $requestChannel = null) {
         $call = $this->call_action($inActionID, $inData, $indicatorID, $confirmation, $requestChannel);
         if($repeat) {
             return "setInterval(function() { {$call} },{$interval});";
@@ -226,7 +226,7 @@ class CricketContext {
      * 
      * @return string
      */
-    public function call_action($inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null, $inMutable = true) {
+    public function call_action($inActionID, $inData = null, $indicatorID = null, $confirmation = null, $requestChannel = null, $inMutable = true) {
         if($inData !== null) {
             if(is_array($inData)) {
                 $inData = json_encode($inData);
@@ -263,7 +263,7 @@ class CricketContext {
      * 
      * @return string cricket_ajax_form
      */
-    public function action($inFormSelector,$inActionID,$inIndicatorID = null,$inConfirmation = null,$requestChannel = null) {
+    public function action($inFormSelector, $inActionID, $inIndicatorID = null, $inConfirmation = null, $requestChannel = null) {
         $js = $this->call_form_action("jQuery('{$inFormSelector}').get()[0]", $inActionID, $inIndicatorID, $inConfirmation, $requestChannel);
         return "javascript:" . Utils::escape_html($js);
     }
@@ -278,7 +278,7 @@ class CricketContext {
      * 
      * @return string cricket_ajax_form
      */
-    public function submit($inActionID,$inIndicatorID = null,$inConfirmation = null,$requestChannel = null) {
+    public function submit($inActionID, $inIndicatorID = null, $inConfirmation = null, $requestChannel = null) {
         $js = $this->call_form_action("this", $inActionID, $inIndicatorID, $inConfirmation, $requestChannel);
         return Utils::escape_html($js);
     }
@@ -294,7 +294,7 @@ class CricketContext {
      * 
      * @return string cricket_ajax_form
      */
-    public function call_form_action($inJSFormReference,$inActionID,$inIndicatorID = null,$inConfirmation = null,$requestChannel = null) {   
+    public function call_form_action($inJSFormReference, $inActionID, $inIndicatorID = null, $inConfirmation = null, $requestChannel = null) {
         
         $url = $this->component->getActionUrl($inActionID);
         $inIndicatorID = $inIndicatorID === null ? "null" : "'$inIndicatorID'";
@@ -304,7 +304,7 @@ class CricketContext {
         $inConfirmation = $inConfirmation === null ? "null" : "'$inConfirmation'";
         $requestChannel = $requestChannel === null ? "null" : "'$requestChannel'";
         
-        return "cricket_ajax_form($inJSFormReference,'{$url}',$inIndicatorID,$inConfirmation,$requestChannel);";
+        return "cricket_ajax_form($inJSFormReference,'{$url}',$inIndicatorID,$inConfirmation,$requestChannel); event.preventDefault();";
     }
     
     //////////////////////////////////////////
