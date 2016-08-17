@@ -271,7 +271,7 @@ abstract class Container implements MessageReceiver {
      * 
      * @return void
      */
-    public function addComponent(Component $newComponent) {
+    public function addComponent(Component &$newComponent) {
         $this->_components[$newComponent->_localID] = $newComponent;
         $newComponent->_parent = $this;
         if($this->_id !== null) {
