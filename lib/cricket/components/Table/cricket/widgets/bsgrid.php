@@ -91,16 +91,22 @@ $grid_indicator = 'grid_sort_indicator';
 <div style="clear: both"></div>
 
 <div class="row">
-    <div class="col">
+    <? $col_counter = 0; ?>
+    <? foreach ($desc['items'] as $item) {
 
-        <? foreach ($desc['items'] as $item) {
-            echo '<div class="col-md-' . $col_width . '">';
+        if(!(($col_width * $col_counter) % 12) && $col_counter > 0) {
+            echo '</div>';
+            echo '<div class="row">';
+        }
 
-            $displayItem($item);
+        echo '<div class="col-md-' . $col_width . '">';
 
-            echo "</div>";
-        } ?>
-    </div>
+        $displayItem($item);
+
+        echo "</div>";
+
+        $col_counter++;
+    } ?>
 </div>
 
 <?php
