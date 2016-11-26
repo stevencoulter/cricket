@@ -1,2 +1,7 @@
 /nbproject/
 lib/cricket/contrib
+cricket
+lib/cricket/.buildpath
+lib/cricket/.project
+lib/cricket/.settings/org.eclipse.php.core.prefs
+lib/cricket/.settings/org.eclipse.wst.common.project.facet.core.xml
