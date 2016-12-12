@@ -266,7 +266,12 @@ class RequestContext {
                 }
                 
                 if (is_link($path)) {
-                	$path = substr(readlink($path),0,-1);
+                	$link = readlink($path);
+                	if(substr($link, 0, -1) != '/') {
+                		$path = $link;
+                	} else {
+                		$path = substr($link,0,-1);
+                	}
                 }
 
                 $result = str_replace($path,"",$fsPath);
