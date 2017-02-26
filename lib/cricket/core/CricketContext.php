@@ -304,7 +304,7 @@ class CricketContext {
         $inConfirmation = $inConfirmation === null ? "null" : "'$inConfirmation'";
         $requestChannel = $requestChannel === null ? "null" : "'$requestChannel'";
         
-        return "cricket_ajax_form($inJSFormReference,'{$url}',$inIndicatorID,$inConfirmation,$requestChannel);";
+        return "cricket_ajax_form($inJSFormReference,'{$url}',$inIndicatorID,$inConfirmation,$requestChannel); if (event) {event.preventDefault();}";
     }
     
     //////////////////////////////////////////
