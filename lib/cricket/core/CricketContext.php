@@ -280,7 +280,7 @@ class CricketContext {
      */
     public function submit($inActionID, $inIndicatorID = null, $inConfirmation = null, $requestChannel = null) {
         $js = $this->call_form_action("this", $inActionID, $inIndicatorID, $inConfirmation, $requestChannel);
-        return Utils::escape_html($js);
+        return Utils::escape_html($js . ' event.preventDefault();'); // Prevent normal form submission (we are using AJAX instead)
     }
     
     /**
@@ -304,7 +304,7 @@ class CricketContext {
         $inConfirmation = $inConfirmation === null ? "null" : "'$inConfirmation'";
         $requestChannel = $requestChannel === null ? "null" : "'$requestChannel'";
         
-        return "cricket_ajax_form($inJSFormReference,'{$url}',$inIndicatorID,$inConfirmation,$requestChannel); if (event) {event.preventDefault();}";
+        return "cricket_ajax_form($inJSFormReference,'{$url}',$inIndicatorID,$inConfirmation,$requestChannel);";
     }
     
     //////////////////////////////////////////
