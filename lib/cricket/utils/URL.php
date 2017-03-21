@@ -28,13 +28,13 @@ class URL {
     
     public function __construct($inURLString = null) {
         $this->params = array();
-        if($inURLString) {
+        if ($inURLString) {
             $this->parts = parse_url($inURLString);
             $qs = $this->getQuery();
-            if(!empty($qs)) {
-                parse_str($qs,$this->params);
+            if (!empty($qs)) {
+                parse_str($qs, $this->params);
             }
-        }else{
+        } else {
             $this->parts = array(
                 'scheme' => 'http',
             );
@@ -50,7 +50,7 @@ class URL {
     }
     
     public function getHost() {
-        return $this->getPart("host");
+        return $this->getPart('host');
     }
     
     public function setHost($inHost) {
@@ -58,7 +58,7 @@ class URL {
     }
     
     public function getPort() {
-        return $this->getPart("port");
+        return $this->getPart('port');
     }
     
     public function setPort($inPort) {
@@ -82,7 +82,7 @@ class URL {
     }
     
     public function getPath() {
-        return $this->getPart("path");
+        return $this->getPart('path');
     }
     
     public function setPath($inPath) {
@@ -90,7 +90,7 @@ class URL {
     }
     
     public function getQuery() {
-        return $this->getPart("query");
+        return $this->getPart('query');
     }
     
     public function setQuery($inQuery) {
@@ -98,7 +98,7 @@ class URL {
     }
     
     public function getFragment() {
-        return $this->getPart("fragment");
+        return $this->getPart('fragment');
     }
     
     public function setFragment($inFrag) {
@@ -113,19 +113,20 @@ class URL {
         return isset($this->params[$inName]) ? $this->params[$inName] : null;
     }
     
-    public function setQueryParameter($inName,$inValue) {
+    public function setQueryParameter($inName, $inValue) {
         $this->params[$inName] = $inValue;
     }
     
     
     public function toString() {
-        $result = $this->getScheme() . "://";
+        $scheme = $this->getScheme();
+        $result = $scheme ? $scheme . '://' : '';
         $user = $this->getUser();
         $pass = $this->getPassword();
-        
-        if($user || $pass) {
+
+        if ($user || $pass) {
             $result .= $user;
-            if($pass) {
+            if ($pass) {
                 $result .= ":$pass";
             }
             
@@ -133,23 +134,23 @@ class URL {
         }
         
         $result .= $this->getHost();
-        
+
         $port = $this->getPort();
-        if($port) {
+        if ($port) {
             $result .= ":$port";
         }
         
         $result .= $this->getPath();
-        
-        if(count($this->params)) {
+
+        if (count($this->params)) {
             $result .= "?" . http_build_query($this->params);
         }
-        
+
         $frag = $this->getFragment();
-        if($frag) {
+        if ($frag) {
             $result .= "#$frag";
         }
-        
+
         return $result;
     }
     
