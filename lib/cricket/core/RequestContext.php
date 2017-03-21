@@ -256,31 +256,40 @@ class RequestContext {
      * @return URL
      */
     public function translatePath($fsPath) {
-        $result = str_replace($this->getContextRoot(), "", $fsPath);
-        if($result != $fsPath) {
-            return $this->getContextUrl() . $result;
-        }else{
-            foreach($this->extResourcePaths as $alias => $path) {
-                if(substr($path, 0, 1) != '/') {
-                    $path = realpath("{$this->getContextRoot()}/{$path}");
-                }
-                
-                if (is_link($path)) {
-                	$link = readlink($path);
-                	if(substr($link, 0, -1) != '/') {
-                		$path = $link;
-                	} else {
-                		$path = substr($link,0,-1);
-                	}
-                }
-
-                $result = str_replace($path,"",$fsPath);
-                                
-                if($result != $fsPath) {
-                    return $this->getContextUrl() . "/$alias$result";
-                }
-            }
-        }
+    	$result = str_replace($this->getContextRoot(), "", $fsPath);
+    	if($result != $fsPath) {
+    		return $this->getContextUrl() . $result;
+    	}else{
+    		foreach($this->extResourcePaths as $alias => $path) {
+    			 
+    			$parts = explode("/",$path);
+    			$partPath = "";
+    			foreach($parts as $index => $part) {
+    				$partPath .= $part;
+    				if (is_link($partPath)) {
+    					$partPath = readlink($partPath);
+    					if ($partPath[strlen($partPath)-1] == "/") {
+    						$partPath = substr($partPath,0,-1);
+    					}
+    				} else {
+    	
+    				}
+    				if ($index <= count($parts) - 2) {
+    					$partPath .= "/";
+    				}
+    			}
+    	
+    			$result = str_replace($partPath,"",$fsPath);
+    			if($result != $fsPath) {
+    				return $this->getContextUrl() . "/$alias$result";
+    			}
+    	
+    			$result = str_replace($path,"",$fsPath);
+    			if($result != $fsPath) {
+    				return $this->getContextUrl() . "/$alias$result";
+    			}
+    		}
+    	}
         
         return "UNTRANSLATABLE_PATH/$fsPath";
     }
