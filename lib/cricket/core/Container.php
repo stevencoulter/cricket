@@ -417,6 +417,28 @@ abstract class Container implements MessageReceiver {
         
         return null;
     }
+
+    /**
+     * Get a component specified by its local ID.  Traverses the component tree.
+     *
+     * @param string $inLocalID
+     *
+     * @return Component
+     */
+    public function findComponentByLocalID($inLocalID) {
+        foreach($this->_components as $id => $thisComp) {
+            if($thisComp->_localID == $inLocalID) {
+                return $thisComp;
+            }else{
+                $thisComp = $thisComp->findComponentByLocalID($inLocalID);
+                if($thisComp !== null) {
+                    return $thisComp;
+                }
+            }
+        }
+
+        return null;
+    }
     
     /**
      * Return the action URL

@@ -20,6 +20,7 @@
 
 namespace cricket\core;
 
+use cricket\components\DialogComponent;
 abstract class Component extends Container {
     
     public $overrideOuterDiv = false; // Only set this to true from within a template...please
@@ -94,7 +95,7 @@ abstract class Component extends Container {
     }
     
     /**
-     * Detatch component from parent
+     * Detach component from parent
      *
      * @link getParent()
      * @link removeComponent()
@@ -105,6 +106,22 @@ abstract class Component extends Container {
         if($this->getParent() !== null) {
             $this->getParent()->removeComponent($this);
         }
+    }
+
+    /**
+     * Returns 
+     *
+     * @return Component instance || undefined
+     */
+    protected function getDialogParent($obj) {
+        $parent = $obj->getParent($obj);
+
+        if(!$parent)
+            return null;
+        else if ($parent instanceof DialogComponent)
+            return $parent;
+        else
+            return $this->getDialogParent($parent);
     }
     
 }
