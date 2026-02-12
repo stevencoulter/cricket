@@ -97,8 +97,8 @@ class CricketContext {
      * 
      * @return string
      */
-    public function indicator($inID, $extraStyles="") {
-        $imagePath = $this->resource_url("cricket/img/indicator.gif");
+    public function indicator($inID, $extraStyles='') {
+        $imagePath = $this->resource_url('cricket/img/indicator.gif');
         return "<img src=\"$imagePath\" border=\"0\" id=\"$inID\" style=\"visibility:hidden;$extraStyles\">";
     }
     
@@ -173,7 +173,7 @@ class CricketContext {
      * 
      * @return string
      */
-    public function onclick($inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
+    public function onclick($inActionID, $inData = null, $indicatorID = null, $confirmation = null, $requestChannel = null) {
         return Utils::escape_html($this->call_action($inActionID,$inData,$indicatorID,$confirmation,$requestChannel));
     }
     
@@ -188,7 +188,7 @@ class CricketContext {
      * 
      * @return string
      */
-    public function href($inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
+    public function href($inActionID, $inData = null, $indicatorID = null, $confirmation = null, $requestChannel = null) {
         return "javascript:" . $this->onclick($inActionID,$inData,$indicatorID,$confirmation,$requestChannel);
     }
     
@@ -205,7 +205,7 @@ class CricketContext {
      * 
      * @return string
      */
-    public function timer($interval,$repeat,$inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null) {
+    public function timer($interval, $repeat, $inActionID, $inData = null, $indicatorID = null, $confirmation = null, $requestChannel = null) {
         $call = $this->call_action($inActionID, $inData, $indicatorID, $confirmation, $requestChannel);
         if($repeat) {
             return "setInterval(function() { {$call} },{$interval});";
@@ -226,7 +226,7 @@ class CricketContext {
      * 
      * @return string
      */
-    public function call_action($inActionID,$inData = null,$indicatorID = null,$confirmation = null,$requestChannel = null, $inMutable = true) {
+    public function call_action($inActionID, $inData = null, $indicatorID = null, $confirmation = null, $requestChannel = null, $inMutable = true) {
         if($inData !== null) {
             if(is_array($inData)) {
                 $inData = json_encode($inData);
@@ -263,7 +263,7 @@ class CricketContext {
      * 
      * @return string cricket_ajax_form
      */
-    public function action($inFormSelector,$inActionID,$inIndicatorID = null,$inConfirmation = null,$requestChannel = null) {
+    public function action($inFormSelector, $inActionID, $inIndicatorID = null, $inConfirmation = null, $requestChannel = null) {
         $js = $this->call_form_action("jQuery('{$inFormSelector}').get()[0]", $inActionID, $inIndicatorID, $inConfirmation, $requestChannel);
         return "javascript:" . Utils::escape_html($js);
     }
@@ -278,9 +278,9 @@ class CricketContext {
      * 
      * @return string cricket_ajax_form
      */
-    public function submit($inActionID,$inIndicatorID = null,$inConfirmation = null,$requestChannel = null) {
+    public function submit($inActionID, $inIndicatorID = null, $inConfirmation = null, $requestChannel = null) {
         $js = $this->call_form_action("this", $inActionID, $inIndicatorID, $inConfirmation, $requestChannel);
-        return Utils::escape_html($js);
+        return Utils::escape_html($js . ' event.preventDefault();'); // Prevent normal form submission (we are using AJAX instead)
     }
     
     /**
@@ -294,7 +294,7 @@ class CricketContext {
      * 
      * @return string cricket_ajax_form
      */
-    public function call_form_action($inJSFormReference,$inActionID,$inIndicatorID = null,$inConfirmation = null,$requestChannel = null) {   
+    public function call_form_action($inJSFormReference, $inActionID, $inIndicatorID = null, $inConfirmation = null, $requestChannel = null) {
         
         $url = $this->component->getActionUrl($inActionID);
         $inIndicatorID = $inIndicatorID === null ? "null" : "'$inIndicatorID'";
@@ -567,10 +567,10 @@ class CricketContext {
      */
     public function form_action($inActionID,$inFormSelector,$inIndicatorID = null,$inConfirmation = null,$requestChannel = null) {
         $url = $this->component->getActionUrl($inActionID);
-        $ind = $inIndicatorID === null ? "null" : "&#39;$inIndicatorID&#39;";
-        $confirm = $inConfirmation === null ? "null" : "&#39;$inConfirmation&#39;";
-        $channel = $requestChannel === null ? "null" : "&#39;$requestChannel&#39;";
-        return "javascript:cricket_ajax_form(jQuery(&#39;#$inFormSelector&#39;).get()[0],&#39;$url&#39;,$ind,$confirm,$channel);";
+        $ind = $inIndicatorID === null ? "null" : "'$inIndicatorID'";
+        $confirm = $inConfirmation === null ? "null" : "'$inConfirmation'";
+        $channel = $requestChannel === null ? "null" : "'$requestChannel'";
+        return "javascript:cricket_ajax_form(jQuery('#$inFormSelector').get()[0],'$url',$ind,$confirm,$channel);";
     }
     
     /**
