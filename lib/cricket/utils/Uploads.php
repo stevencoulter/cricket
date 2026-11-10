@@ -65,8 +65,8 @@ class Uploads {
     
     static public function getFileUploadMimeType($inFileUpload) {
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $type = finfo_file($inFileUpload['tmp_name']);
-        finfo_close($finfo);
+        $type = $finfo ? finfo_file($finfo, $inFileUpload['tmp_name']) : false;
+        // finfo_close() is a no-op since PHP 8.1 and deprecated in 8.5; the object is freed automatically
         
         if(!$type) {
             $type = $inFileUpload['type'];

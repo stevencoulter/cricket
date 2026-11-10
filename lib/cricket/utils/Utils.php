@@ -153,8 +153,8 @@ class Utils {
         curl_setopt($c, CURLOPT_HEADER, 0);
         curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($c);
-        curl_close($c);
-        return $c;
+        // curl_close() is a no-op since PHP 8.0 and deprecated in 8.5; the handle is freed automatically
+        return $result;
     }
     
     

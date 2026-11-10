@@ -43,6 +43,7 @@ abstract class Table extends \cricket\core\Component {
     public $autoPagingThreshold;
     public $autoPagingPageSize;
     public $autoPagingScrollingSize;
+    public $autoPagingScrollingHeight;
     public $autoPagingActive;
     public $originalPageSize;
     public $originalScrollingHeight;

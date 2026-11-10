@@ -23,6 +23,8 @@ namespace cricket\components;
 
 abstract class Grid extends Table {
 
+	public $numColumns;
+
 	public function __construct($inID, Table_Sort $inDefaultSort, $inPageSize, $inCols, $inAdjacentPages = 3){
 		$this->numColumns = $inCols;
 		parent::__construct($inID,$inDefaultSort,$inPageSize,$inAdjacentPages);

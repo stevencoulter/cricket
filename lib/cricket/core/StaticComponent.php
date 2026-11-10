@@ -56,11 +56,11 @@ abstract class StaticComponent extends Component {
     /**
      * @link Component::getActionUrl()
      */
-    public function getActionUrl($inActionID) {
+    public function getActionUrl($inActionID, $inMutable = true) {
         $pathInfo = "{$this->getId()}/{$this->renderLocalID}/{$inActionID}";
         
         $page = $this->getPage();
-        return $page->getModule()->assembleURL($this->getRequest(),$page->getPageClassName(),$pathInfo,$page->getInstanceID());
+        return $page->getModule()->assembleURL($this->getRequest(),$page->getPageClassName(),$pathInfo,$page->getInstanceID(), $inMutable);
     }
 
     /**

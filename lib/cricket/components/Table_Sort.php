@@ -31,6 +31,8 @@ namespace cricket\components;
 class Table_Sort {
     public $desc;
     public $column;
+    /** @var Table_Sort|null */
+    public $nextSort;
     
     public function __construct($inCol,$inDesc) {
         $this->desc = $inDesc;

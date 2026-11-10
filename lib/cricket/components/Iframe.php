@@ -29,6 +29,8 @@ use cricket\core\Component;
  */
 class Iframe extends Component {
     
+    public $url;
+    public $height;
     public $attributes = array();
     public $styles = array();
     

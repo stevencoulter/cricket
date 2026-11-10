@@ -50,7 +50,8 @@ abstract class ExitHandler {
         }
     }
     
-    public function errorHandler($errno,$errstr,$errfile, $errline,$errcontext) {
+    // PHP 8 no longer passes $errcontext to error handlers; it must be optional
+    public function errorHandler($errno,$errstr,$errfile, $errline,$errcontext = null) {
         
         // first see if its normally a fatal error
         $isFatal = false;
@@ -71,7 +72,7 @@ abstract class ExitHandler {
         }
         
         if($this->previousErrorHandler) {
-            return call_user_func($this->previousErrorHandler, $errno,$errstr,$errfile,$errline,$errcontext);
+            return call_user_func($this->previousErrorHandler, $errno,$errstr,$errfile,$errline);
         }
         
         return false;
@@ -88,7 +89,6 @@ abstract class ExitHandler {
                 case E_COMPILE_WARNING:
                 case E_USER_WARNING:
                 case E_USER_NOTICE:
-                case E_STRICT:
                 case E_DEPRECATED:
                 case E_USER_DEPRECATED:
                     $scriptWasHalted = false;

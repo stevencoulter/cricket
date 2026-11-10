@@ -8,6 +8,9 @@ namespace cricket\components;
 
 abstract class Sortable extends \cricket\core\Component {
     
+    // populated by the subclass's get_lists() implementation
+    public $lists = array();
+    
     public function __construct($inID) {
         parent::__construct($inID);
         

@@ -64,7 +64,7 @@ class TemplateInheritanceContext {
     public function __construct(CricketContext $inContext) {
         $this->root = null;
         $this->currentBlock = null;
-        $this->blockNames = array();
+        $this->namedBlocks = array();
         $this->stack = array();
         $this->ctx = $inContext;
     }

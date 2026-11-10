@@ -29,6 +29,8 @@ namespace cricket\components;
  */
 class DialogWrapper extends ModalComponent {
     
+    public $_component_id;
+    
     public function __construct($inID,$inTitle,$inWidth,\cricket\core\Component $inComponent, $inFocus = '') {
         parent::__construct($inID, $inTitle, $inWidth, $inFocus);
 		$this->addComponent($inComponent);

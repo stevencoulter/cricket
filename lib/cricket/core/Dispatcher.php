@@ -281,7 +281,7 @@ class Dispatcher {
                     
                     // ESCAPE HATCH FOR MODE_PRESERVE PAGES TO FORCE A RELOAD
                     
-                    if($_SERVER['QUERY_STRING'] == 'reload') {
+                    if(isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] == 'reload') {
                         $instanceID = null;
                         $loadID = null;
                     }

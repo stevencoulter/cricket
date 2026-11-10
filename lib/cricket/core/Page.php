@@ -322,7 +322,7 @@ abstract class Page extends Container {
      * @return string
      */
     public function generateInstanceID() {
-        return uniqid(null,true);
+        return uniqid('', true);
     }
     
     /**

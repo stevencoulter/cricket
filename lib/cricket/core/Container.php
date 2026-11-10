@@ -30,6 +30,10 @@ use cricket\components\DialogWrapper;
  * The core class of a cricket object
  */
 
+// PHP 8.2+: application Page/Component subclasses commonly keep state in undeclared
+// instance variables. The attribute is inherited by subclasses and keeps that working
+// without deprecation notices (it is a plain comment on PHP < 8.0).
+#[\AllowDynamicProperties]
 abstract class Container implements MessageReceiver {
     // these are all public so that the default serialize implementation will work
     

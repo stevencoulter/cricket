@@ -4,6 +4,9 @@
         "url": "https://github.com/stevencoulter/cricket.git",
         "type": "git"
     },
+    "require": {
+        "php": ">=8.0"
+    },
     "autoload": {
         "psr-0": {"cricket\\": "lib/"}
     },
